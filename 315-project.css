@@ -1,3 +1,19 @@
-div#header {
-	vertical-align: center;
+body {
+    background-color: blue;
+}
+
+#all-content {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    
+    height: 1000px;
+    background-color: green;
+    
+}
+
+header.top {
+    height: 200px;
+    background-color: gray;
 }
