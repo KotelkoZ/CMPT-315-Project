@@ -22,12 +22,23 @@
                             <a class="menuItem" href="">TEST</a>
                         </nav>
                     </section>
-                    <section id="main-cont">
-                        <p id="output"></p>
+                    <section id="main-panel">
+                        
+                        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
                         <script>
-                            
-
-                            
+                            $.getJSON('tickers.json', function(data) {
+                                var output = "<table id='stock-table'><tr><th>Ticker</th><th>Stock Name</th><th>Exchange</th></tr>";
+                                
+                                for (var i in data) {
+                                    var stockItem = data[i];
+                                    output += "<tr><td>" + stockItem["Ticker"] + "</td>";
+                                    output += "<td><a class='stock' href='/'>" + stockItem["Stock Name"] + "</a></td>";
+                                    output += "<td>" + stockItem["Price Code"] + "</td></tr>";
+                                }
+                                
+                                output += "</table>";
+                                document.getElementById("main-panel").innerHTML = output;
+                            });
                         </script>
                     </section>
                 </div>

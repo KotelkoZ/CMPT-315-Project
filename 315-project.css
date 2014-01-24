@@ -57,3 +57,12 @@ section#left-panel nav#left-nav a.menuItem {
 nav#left-nav a.menuItem:hover {
     background-color: #FE3F44;
 }
+
+section#main-panel table#stock-table {
+    margin: 20px;
+    border: thin solid black;
+}
+
+a.stock:hover {
+    
+}
