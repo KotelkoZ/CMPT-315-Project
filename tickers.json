@@ -1,0 +1,614 @@
+[
+  {
+    "Ticker":"SRCE",
+    "Stock Name":"1st Source Corp.",
+    "Price Code":"GOOG/NASDAQ_SRCE",
+    "Ratios Code":"OFDP/DMDRN_SRCE_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MMM",
+    "Stock Name":"3M Company",
+    "Price Code":"GOOG/NYSE_MMM",
+    "Ratios Code":"OFDP/DMDRN_MMM_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"ABM",
+    "Stock Name":"Abm Industries Incorporated",
+    "Price Code":"GOOG/NYSE_ABM",
+    "Ratios Code":"OFDP/DMDRN_ABM_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"AFL",
+    "Stock Name":"Aflac Incorporated",
+    "Price Code":"GOOG/NYSE_AFL",
+    "Ratios Code":"OFDP/DMDRN_AFL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"APD",
+    "Stock Name":"Air Products And Chemicals",
+    "Price Code":"GOOG/NYSE_APD",
+    "Ratios Code":"OFDP/DMDRN_APD_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MO",
+    "Stock Name":"Altria Group",
+    "Price Code":"GOOG/NYSE_MO",
+    "Ratios Code":"OFDP/DMDRN_MO_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"AWR",
+    "Stock Name":"American States Water Company",
+    "Price Code":"GOOG/NYSE_AWR",
+    "Ratios Code":"OFDP/DMDRN_AWR_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"ADM",
+    "Stock Name":"Archer-Daniels-Midland Company",
+    "Price Code":"GOOG/NYSE_ADM",
+    "Ratios Code":"OFDP/DMDRN_ADM_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"T",
+    "Stock Name":"AT&T Corp.",
+    "Price Code":"GOOG/NYSE_T",
+    "Ratios Code":"OFDP/DMDRN_T_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"ATO",
+    "Stock Name":"Atmos Energy Corp.",
+    "Price Code":"GOOG/NYSE_ATO",
+    "Ratios Code":"OFDP/DMDRN_ATO_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"ADP",
+    "Stock Name":"Automatic Data Processing",
+    "Price Code":"GOOG/NASDAQ_ADP",
+    "Ratios Code":"OFDP/DMDRN_ADP_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"BDX",
+    "Stock Name":"Becton Dickinson And Company",
+    "Price Code":"GOOG/NYSE_BDX",
+    "Ratios Code":"OFDP/DMDRN_BDX_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"BMS",
+    "Stock Name":"Bemis Company",
+    "Price Code":"GOOG/NYSE_BMS",
+    "Ratios Code":"OFDP/DMDRN_BMS_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"BKH",
+    "Stock Name":"Black Hills Corp.",
+    "Price Code":"GOOG/NYSE_BKH",
+    "Ratios Code":"OFDP/DMDRN_BKH_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"BRC",
+    "Stock Name":"Brady Corp.",
+    "Price Code":"GOOG/NYSE_BRC",
+    "Ratios Code":"OFDP/DMDRN_BRC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"BCR",
+    "Stock Name":"C.R. Bard",
+    "Price Code":"GOOG/NYSE_BCR",
+    "Ratios Code":"OFDP/DMDRN_BCR_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CWT",
+    "Stock Name":"California Water Service Group Holding",
+    "Price Code":"GOOG/NYSE_CWT",
+    "Ratios Code":"OFDP/DMDRN_CWT_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CSL",
+    "Stock Name":"Carlisle Companies Inc.",
+    "Price Code":"GOOG/NYSE_CSL",
+    "Ratios Code":"OFDP/DMDRN_CSL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CVX",
+    "Stock Name":"Chevron Corp.",
+    "Price Code":"GOOG/NYSE_CVX",
+    "Ratios Code":"OFDP/DMDRN_CVX_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CB",
+    "Stock Name":"Chubb Corp.",
+    "Price Code":"GOOG/NYSE_CB",
+    "Ratios Code":"OFDP/DMDRN_CB_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CINF",
+    "Stock Name":"Cincinnati Financial Corp.",
+    "Price Code":"GOOG/NASDAQ_CINF",
+    "Ratios Code":"OFDP/DMDRN_CINF_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CTAS",
+    "Stock Name":"Cintas Corp.",
+    "Price Code":"GOOG/NASDAQ_CTAS",
+    "Ratios Code":"OFDP/DMDRN_CTAS_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CLC",
+    "Stock Name":"Clarcor Inc.",
+    "Price Code":"GOOG/NYSE_CLC",
+    "Ratios Code":"OFDP/DMDRN_CLC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CLX",
+    "Stock Name":"Clorox Company",
+    "Price Code":"GOOG/NYSE_CLX",
+    "Ratios Code":"OFDP/DMDRN_CLX_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"KO",
+    "Stock Name":"Coca-Cola Company",
+    "Price Code":"GOOG/NYSE_KO",
+    "Ratios Code":"OFDP/DMDRN_KO_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CL",
+    "Stock Name":"Colgate-Palmolive Company",
+    "Price Code":"GOOG/NYSE_CL",
+    "Ratios Code":"OFDP/DMDRN_CL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CBSH",
+    "Stock Name":"Commerce Bancshares",
+    "Price Code":"GOOG/NASDAQ_CBSH",
+    "Ratios Code":"OFDP/DMDRN_CBSH_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CTBI",
+    "Stock Name":"Community Trust Bancorp",
+    "Price Code":"GOOG/NASDAQ_CTBI",
+    "Ratios Code":"OFDP/DMDRN_CTBI_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"CTWS",
+    "Stock Name":"Connecticut Water Service",
+    "Price Code":"GOOG/NASDAQ_CTWS",
+    "Ratios Code":"OFDP/DMDRN_CTWS_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"ED",
+    "Stock Name":"Consolidated Edison Company Of New York",
+    "Price Code":"GOOG/NYSE_ED",
+    "Ratios Code":"OFDP/DMDRN_ED_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"DBD",
+    "Stock Name":"Diebold Inc.",
+    "Price Code":"GOOG/NYSE_DBD",
+    "Ratios Code":"OFDP/DMDRN_DBD_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"DCI",
+    "Stock Name":"Donaldson Company",
+    "Price Code":"GOOG/NYSE_DCI",
+    "Ratios Code":"OFDP/DMDRN_DCI_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"DOV",
+    "Stock Name":"Dover Corp.",
+    "Price Code":"GOOG/NYSE_DOV",
+    "Ratios Code":"OFDP/DMDRN_DOV_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"EFSI",
+    "Stock Name":"Eagle Financial Services Inc",
+    "Price Code":"GOOG/PINK_EFSI",
+    "Ratios Code":"OFDP/DMDRN_EFSI_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"EV",
+    "Stock Name":"Eaton Vance Corp.",
+    "Price Code":"GOOG/NYSE_EV",
+    "Ratios Code":"OFDP/DMDRN_EV_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"EMR",
+    "Stock Name":"Emerson Electric Company",
+    "Price Code":"GOOG/NYSE_EMR",
+    "Ratios Code":"OFDP/DMDRN_EMR_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"EGN",
+    "Stock Name":"Energen Corp.",
+    "Price Code":"GOOG/NYSE_EGN",
+    "Ratios Code":"OFDP/DMDRN_EGN_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"XOM",
+    "Stock Name":"Exxon Mobil Corp.",
+    "Price Code":"GOOG/NYSE_XOM",
+    "Ratios Code":"OFDP/DMDRN_XOM_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"FDO",
+    "Stock Name":"Family Dollar Stores",
+    "Price Code":"GOOG/NYSE_FDO",
+    "Ratios Code":"OFDP/DMDRN_FDO_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"FRT",
+    "Stock Name":"Federal Realty Investment Trust",
+    "Price Code":"GOOG/NYSE_FRT",
+    "Ratios Code":"OFDP/DMDRN_FRT_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"BEN",
+    "Stock Name":"Franklin Resources",
+    "Price Code":"GOOG/NYSE_BEN",
+    "Ratios Code":"OFDP/DMDRN_BEN_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"GPC",
+    "Stock Name":"Genuine Parts Company",
+    "Price Code":"GOOG/NYSE_GPC",
+    "Ratios Code":"OFDP/DMDRN_GPC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"GRC",
+    "Stock Name":"Gorman-Rupp Company",
+    "Price Code":"GOOG/AMEX_GRC",
+    "Ratios Code":"OFDP/DMDRN_GRC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"FUL",
+    "Stock Name":"H. B. Fuller Company",
+    "Price Code":"GOOG/NYSE_FUL",
+    "Ratios Code":"OFDP/DMDRN_FUL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"HCP",
+    "Stock Name":"Hcp",
+    "Price Code":"GOOG/NYSE_HCP",
+    "Ratios Code":"OFDP/DMDRN_HCP_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"HP",
+    "Stock Name":"Helmerich & Payne",
+    "Price Code":"GOOG/NYSE_HP",
+    "Ratios Code":"OFDP/DMDRN_HP_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"HRL",
+    "Stock Name":"Hormel Foods Corp.",
+    "Price Code":"GOOG/NYSE_HRL",
+    "Ratios Code":"OFDP/DMDRN_HRL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"ITW",
+    "Stock Name":"Illinois Tool Works Inc.",
+    "Price Code":"GOOG/NYSE_ITW",
+    "Ratios Code":"OFDP/DMDRN_ITW_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"JNJ",
+    "Stock Name":"Johnson & Johnson",
+    "Price Code":"GOOG/NYSE_JNJ",
+    "Ratios Code":"OFDP/DMDRN_JNJ_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"KMB",
+    "Stock Name":"Kimberly-Clark Corp.",
+    "Price Code":"GOOG/NYSE_KMB",
+    "Ratios Code":"OFDP/DMDRN_KMB_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"LANC",
+    "Stock Name":"Lancaster Colony Corp.",
+    "Price Code":"GOOG/NASDAQ_LANC",
+    "Ratios Code":"OFDP/DMDRN_LANC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"LEG",
+    "Stock Name":"Leggett & Platt Inc.",
+    "Price Code":"GOOG/NYSE_LEG",
+    "Ratios Code":"OFDP/DMDRN_LEG_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"LOW",
+    "Stock Name":"Lowe's Companies",
+    "Price Code":"GOOG/NYSE_LOW",
+    "Ratios Code":"OFDP/DMDRN_LOW_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MKC",
+    "Stock Name":"Mccormick & Company Inc.",
+    "Price Code":"GOOG/NYSE_MKC",
+    "Ratios Code":"OFDP/DMDRN_MKC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MCD",
+    "Stock Name":"Mcdonald's Corp.",
+    "Price Code":"GOOG/NYSE_MCD",
+    "Ratios Code":"OFDP/DMDRN_MCD_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MHP",
+    "Stock Name":"Mcgraw-Hill Companies",
+    "Price Code":"GOOG/NYSE_MHP",
+    "Ratios Code":"OFDP/DMDRN_MHP_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MDT",
+    "Stock Name":"Medtronic",
+    "Price Code":"GOOG/NYSE_MDT",
+    "Ratios Code":"OFDP/DMDRN_MDT_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MCY",
+    "Stock Name":"Mercury General Corp.",
+    "Price Code":"GOOG/NYSE_MCY",
+    "Ratios Code":"OFDP/DMDRN_MCY_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MGEE",
+    "Stock Name":"Mge Energy Inc.",
+    "Price Code":"GOOG/NASDAQ_MGEE",
+    "Ratios Code":"OFDP/DMDRN_MGEE_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MSEX",
+    "Stock Name":"Middlesex Water Company",
+    "Price Code":"GOOG/NASDAQ_MSEX",
+    "Ratios Code":"OFDP/DMDRN_MSEX_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"MSA",
+    "Stock Name":"Mine Safety Appliances",
+    "Price Code":"GOOG/NYSE_MSA",
+    "Ratios Code":"OFDP/DMDRN_MSA_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"NC",
+    "Stock Name":"NACCO Industries",
+    "Price Code":"GOOG/NYSE_NC",
+    "Ratios Code":"OFDP/DMDRN_NC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"NFG",
+    "Stock Name":"National Fuel Gas",
+    "Price Code":"GOOG/NYSE_NFG",
+    "Ratios Code":"OFDP/DMDRN_NFG_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"NDSN",
+    "Stock Name":"Nordson Corp.",
+    "Price Code":"GOOG/NASDAQ_NDSN",
+    "Ratios Code":"OFDP/DMDRN_NDSN_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"NWN",
+    "Stock Name":"Northwest Nat. Gas",
+    "Price Code":"GOOG/NYSE_NWN",
+    "Ratios Code":"OFDP/DMDRN_NWN_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"NUE",
+    "Stock Name":"Nucor Corp.",
+    "Price Code":"GOOG/NYSE_NUE",
+    "Ratios Code":"OFDP/DMDRN_NUE_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"ORI",
+    "Stock Name":"Old Republic",
+    "Price Code":"GOOG/NYSE_ORI",
+    "Ratios Code":"OFDP/DMDRN_ORI_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"PH",
+    "Stock Name":"Parker-Hannifin",
+    "Price Code":"GOOG/NYSE_PH",
+    "Ratios Code":"OFDP/DMDRN_PH_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"PNR",
+    "Stock Name":"Pentair Inc.",
+    "Price Code":"GOOG/NYSE_PNR",
+    "Ratios Code":"OFDP/DMDRN_PNR_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"PEP",
+    "Stock Name":"PepsiCo Inc.",
+    "Price Code":"GOOG/NYSE_PEP",
+    "Ratios Code":"OFDP/DMDRN_PEP_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"PNY",
+    "Stock Name":"Piedmont Natural Gas",
+    "Price Code":"GOOG/NYSE_PNY",
+    "Ratios Code":"OFDP/DMDRN_PNY_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"PPG",
+    "Stock Name":"PPG Inds.",
+    "Price Code":"GOOG/NYSE_PPG",
+    "Ratios Code":"OFDP/DMDRN_PPG_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"PG",
+    "Stock Name":"Procter & Gamble",
+    "Price Code":"GOOG/NYSE_PG",
+    "Ratios Code":"OFDP/DMDRN_PG_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"STR",
+    "Stock Name":"Questar Corp.",
+    "Price Code":"GOOG/NYSE_STR",
+    "Ratios Code":"OFDP/DMDRN_STR_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"RAVN",
+    "Stock Name":"Raven Inds.",
+    "Price Code":"GOOG/NASDAQ_RAVN",
+    "Ratios Code":"OFDP/DMDRN_RAVN_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"RLI",
+    "Stock Name":"RLI Corp.",
+    "Price Code":"GOOG/NYSE_RLI",
+    "Ratios Code":"OFDP/DMDRN_RLI_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"RPM",
+    "Stock Name":"RPM Inc.",
+    "Price Code":"GOOG/NYSE_RPM",
+    "Ratios Code":"OFDP/DMDRN_RPM_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"SHW",
+    "Stock Name":"Sherwin-Williams",
+    "Price Code":"GOOG/NYSE_SHW",
+    "Ratios Code":"OFDP/DMDRN_SHW_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"SIAL",
+    "Stock Name":"Sigma-Aldrich",
+    "Price Code":"GOOG/NASDAQ_SIAL",
+    "Ratios Code":"OFDP/DMDRN_SIAL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"SJW",
+    "Stock Name":"SJW Corp.",
+    "Price Code":"GOOG/NYSE_SJW",
+    "Ratios Code":"OFDP/DMDRN_SJW_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"SON",
+    "Stock Name":"Sonoco Products",
+    "Price Code":"GOOG/NYSE_SON",
+    "Ratios Code":"OFDP/DMDRN_SON_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"SWK",
+    "Stock Name":"Stanley Works",
+    "Price Code":"GOOG/NYSE_SWK",
+    "Ratios Code":"OFDP/DMDRN_SWK_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"SCL",
+    "Stock Name":"Stepan Company",
+    "Price Code":"GOOG/NYSE_SCL",
+    "Ratios Code":"OFDP/DMDRN_SCL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"SYY",
+    "Stock Name":"Sysco Corp.",
+    "Price Code":"GOOG/NYSE_SYY",
+    "Ratios Code":"OFDP/DMDRN_SYY_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"TROW",
+    "Stock Name":"Price (T. Rowe) Group",
+    "Price Code":"GOOG/NASDAQ_TROW",
+    "Ratios Code":"OFDP/DMDRN_TROW_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"TGT",
+    "Stock Name":"Target Corp.",
+    "Price Code":"GOOG/NYSE_TGT",
+    "Ratios Code":"OFDP/DMDRN_TGT_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"TDS",
+    "Stock Name":"Telephone & Data",
+    "Price Code":"GOOG/NYSE_TDS",
+    "Ratios Code":"OFDP/DMDRN_TDS_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"TNS",
+    "Stock Name":"TNS Inc",
+    "Price Code":"GOOG/NYSE_TNS",
+    "Ratios Code":"OFDP/DMDRN_TNS_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"TMP",
+    "Stock Name":"Tompkinstrustco",
+    "Price Code":"GOOG/AMEX_TMP",
+    "Ratios Code":"OFDP/DMDRN_TMP_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"TR",
+    "Stock Name":"Tootsie Roll Ind.",
+    "Price Code":"GOOG/NYSE_TR",
+    "Ratios Code":"OFDP/DMDRN_TR_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"UGI",
+    "Stock Name":"UGI Corp.",
+    "Price Code":"GOOG/NYSE_UGI",
+    "Ratios Code":"OFDP/DMDRN_UGI_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"UBSI",
+    "Stock Name":"United Bkshrs W.Va.",
+    "Price Code":"GOOG/NASDAQ_UBSI",
+    "Ratios Code":"OFDP/DMDRN_UBSI_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"UVV",
+    "Stock Name":"Universal Corp.",
+    "Price Code":"GOOG/NYSE_UVV",
+    "Ratios Code":"OFDP/DMDRN_UVV_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"UHT",
+    "Stock Name":"Universal Health Realty",
+    "Price Code":"GOOG/NYSE_UHT",
+    "Ratios Code":"OFDP/DMDRN_UHT_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"VAL",
+    "Stock Name":"Valspar Corp.",
+    "Price Code":"GOOG/NYSE_VAL",
+    "Ratios Code":"OFDP/DMDRN_VAL_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"VVC",
+    "Stock Name":"Vectren Corp.",
+    "Price Code":"GOOG/NYSE_VVC",
+    "Ratios Code":"OFDP/DMDRN_VVC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"VFC",
+    "Stock Name":"V.F. Corp.",
+    "Price Code":"GOOG/NYSE_VFC",
+    "Ratios Code":"OFDP/DMDRN_VFC_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"GWW",
+    "Stock Name":"W.W. Grainger",
+    "Price Code":"GOOG/NYSE_GWW",
+    "Ratios Code":"OFDP/DMDRN_GWW_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"WAG",
+    "Stock Name":"Walgreen Co.",
+    "Price Code":"GOOG/NYSE_WAG",
+    "Ratios Code":"OFDP/DMDRN_WAG_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"WMT",
+    "Stock Name":"Wal-Mart Stores",
+    "Price Code":"GOOG/NYSE_WMT",
+    "Ratios Code":"OFDP/DMDRN_WMT_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"WEYS",
+    "Stock Name":"Weyco Group",
+    "Price Code":"GOOG/NASDAQ_WEYS",
+    "Ratios Code":"OFDP/DMDRN_WEYS_ALLFINANCIALRATIOS"
+  },
+  {
+    "Ticker":"WGL",
+    "Stock Name":"WGL Holdings Inc.",
+    "Price Code":"GOOG/NYSE_WGL",
+    "Ratios Code":"OFDP/DMDRN_WGL_ALLFINANCIALRATIOS"
+  }
+]

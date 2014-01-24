@@ -47,7 +47,7 @@ section#left-panel {
     background-color: #FE7276;
 }
 
-nav#left-nav a.menuItem {
+section#left-panel nav#left-nav a.menuItem {
     display: block;
     font-size: 1.2em;
     border-bottom: none;
