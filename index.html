@@ -5,37 +5,29 @@
         <title>315 Project</title>
         <link rel="stylesheet" type="text/css" href="315-project.css">
     </head>
-    
-	<body>
-        <section id="head-content">
-            <header class="top"></header>
-        </section>
-        
+    <body>
+        <header class="top"></header>
         <section id="main-content">
             <div id="tableContainer">
                 <div id="tableRow">
                     <section id="left-panel">
                         <nav id="left-nav">
-                            <a class="menuItem" href="">TESTTEST</a>
+                            <a class="menuItem" href="index.html">HOME</a>
                             <a class="menuItem" href="">TEST</a>
                             <a class="menuItem" href="">TEST</a>
                             <a class="menuItem" href="">TEST</a>
                         </nav>
                     </section>
                     <section id="main-panel">
-                        
                         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
                         <script>
-                            $.getJSON('tickers.json', function(data) {
-                                var output = "<table id='stock-table'><tr><th>Ticker</th><th>Stock Name</th><th>Exchange</th></tr>";
-                                
-                                for (var i in data) {
-                                    var stockItem = data[i];
-                                    output += "<tr><td>" + stockItem["Ticker"] + "</td>";
-                                    output += "<td><a class='stock' href='/'>" + stockItem["Stock Name"] + "</a></td>";
-                                    output += "<td>" + stockItem["Price Code"] + "</td></tr>";
-                                }
-                                
+                            $.getJSON('tickers/NYSE.json', function(data) {
+                                var output = "<table id='stock-table'><tr><th>Ticker</th><th>Stock Name</th></tr>";
+                                data.forEach(function(company) {
+                                    output += "<tr><td>" + company["Ticker"] + "</td>";
+                                    output += "<td><a class='stock' href='stock.html?StockInfo=GOOG/NYSE_";
+                                    output += company["Ticker"] + "'>" + company[" Name"] + "</a></td></tr>";
+                                });
                                 output += "</table>";
                                 document.getElementById("main-panel").innerHTML = output;
                             });
@@ -44,10 +36,5 @@
                 </div>
             </div>
         </section>
-        
-      
-        
-        
-        
     </body>
 </html>

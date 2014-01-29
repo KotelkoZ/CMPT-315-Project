@@ -15,7 +15,7 @@ body {
     background-color: #fff;
 }
 
-#head-content header.top {
+header.top {
     width: 800px;
     margin: 0px auto;
     background-color: #FE3F44;
@@ -51,7 +51,7 @@ section#left-panel nav#left-nav a.menuItem {
     display: block;
     font-size: 1.2em;
     border-bottom: none;
-    padding: 5px 10px;
+    padding: 5px 40px;
 }
 
 nav#left-nav a.menuItem:hover {
@@ -61,8 +61,16 @@ nav#left-nav a.menuItem:hover {
 section#main-panel table#stock-table {
     margin: 20px;
     border: thin solid black;
+    background-color: light-gray;
+    border-collapse: collapse;
+    padding: 10px;
+    width: 124%
 }
 
-a.stock:hover {
-    
+tr:nth-child(odd) {
+    background-color: #f0efef;
+}
+
+td, th {
+    padding: 5px;
 }
