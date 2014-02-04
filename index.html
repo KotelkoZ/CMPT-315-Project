@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>315 Project</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            
+            var chartArray = [['ID','PERatio','Dividend Yield','Company Name','Volume']];
+            var tickerArray = [];
+            $.getJSON('tickers/DivChamp.json', function(file) {
+                file.query.results.quote.forEach(function(company) {
+                    var subArray = [company.Name, parseFloat(company.PERatio), parseFloat(company.DividendYield), company.symbol, parseFloat(company.Volume)];
+                    chartArray.push(subArray);
+                    tickerArray.push(company.symbol);
+                });
+            });
+            
+            var chart;
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable(chartArray);
+
+                var options = {
+                    hAxis: {title: 'PERatio', gridlines: {color: 'none'}},
+                    vAxis: {title: 'Dividend Yield', gridlines: {color: 'none'}},
+                    bubble: {textStyle: {color: 'none'}},
+                    legend: {position: 'none'},
+                    chartArea: {left: 50, top: 0, width:"90%", height:"80%"},
+                    explorer: {}
+                };
+
+                chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+                google.visualization.events.addListener(chart, 'select', selectHandler);
+            }
+            
+            function selectHandler() {
+                var s = chart.getSelection();
+                var row = s["0"].row;
+                search(tickerArray[row]);
+            }
+            
+            function search(term) {
+                console.log(term);
+            }
+            
+            function searchFromInput() {
+                search(document.getElementById('searchBox').value);
+            }
+        </script>
+    </head>
+
+    <body>
+        <section id="main-content">
+            
+            <section id="left-panel">
+                <!-- HTML Search bar -->
+                <h1>Stock App
+                    <input type="text" id="searchBox" name="searchBox">
+                    <input type="submit" id="searchButton" onClick="searchFromInput()">
+                </h1>
+            </section>
+            <div id="chart_div" style="width: 1000px; height: 550px;"></div>
+            
+        </section>
+    </body>
+</html>
