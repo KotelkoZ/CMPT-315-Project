@@ -7,17 +7,6 @@ body {
 
 #head-content {
     background-color: #FE7276;
-<<<<<<< HEAD
-}
-
-#main-content {
-    width: 800px;
-    margin: 0px auto;
-    background-color: #fff;
-}
-
-#head-content header.top {
-=======
 }
 
 #main-content {
@@ -27,7 +16,6 @@ body {
 }
 
 header.top {
->>>>>>> Lee
     width: 800px;
     margin: 0px auto;
     background-color: #FE3F44;
@@ -63,17 +51,11 @@ section#left-panel nav#left-nav a.menuItem {
     display: block;
     font-size: 1.2em;
     border-bottom: none;
-<<<<<<< HEAD
-    padding: 5px 10px;
-=======
     padding: 5px 40px;
->>>>>>> Lee
 }
 
 nav#left-nav a.menuItem:hover {
     background-color: #FE3F44;
-<<<<<<< HEAD
-=======
 }
 
 section#main-panel table#stock-table {
@@ -91,5 +73,4 @@ tr:nth-child(odd) {
 
 td, th {
     padding: 5px;
->>>>>>> Lee
 }
