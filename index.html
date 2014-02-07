@@ -8,64 +8,174 @@
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
+            $(document).ready(function() {
+                $('#filter_div').hide();
+                
+                $('h2#open_filters').click(function() {
+                    $(this).next('#filter_div').slideToggle(200);
+                    $(this).toggleClass('close');
+                })
+                .css('cursor', 'pointer');
+                
+                $('h3#filter_btn').click(function() {
+                    //console.log('makechart');
+                    makeChart(false);
+                })
+                .css('cursor', 'pointer');
+            });
             
-            var chartArray = [['ID','PERatio','Dividend Yield','Company Name','Volume']];
+            //$(document).ready(makeChart());
+            //$(window).load(makeChart())
+            
+            //var chartArray = [['ID','P/E Ratio','Dividend Yield','Ticker Symbol','Trade Volume']];
+            var USArray = [];
+            var CANArray = [];
             var tickerArray = [];
-            $.getJSON('tickers/DivChamp.json', function(file) {
+            
+            $.getJSON('tickers/DivChampUS.json', function(file) {
                 file.query.results.quote.forEach(function(company) {
                     var subArray = [company.Name, parseFloat(company.PERatio), parseFloat(company.DividendYield), company.symbol, parseFloat(company.Volume)];
-                    chartArray.push(subArray);
+                    //chartArray.push(subArray);
+                    USArray.push(subArray);
                     tickerArray.push(company.symbol);
                 });
             });
             
-            var chart;
-            google.load("visualization", "1", {packages:["corechart"]});
-            google.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable(chartArray);
+            $.getJSON('tickers/DivChampCAN.json', function(file) {
+                file.query.results.quote.forEach(function(company) {
+                    var subArray = [company.Name, parseFloat(company.PERatio), parseFloat(company.DividendYield), company.symbol, parseFloat(company.Volume)];
+                    //chartArray.push(subArray);
+                    CANArray.push(subArray);
+                    tickerArray.push(company.symbol);
+                });
+            });
+            
+            
+            function makeChart(firstLoad) {
+                console.log(firstLoad);
+                var USFilter = firstLoad || document.getElementById('USFilter').checked;
+                var CANFilter = firstLoad || document.getElementById('CANFilter').checked;
+                
+                //var chartArray;
+                var chartArray = [['ID','P/E Ratio','Dividend Yield','Ticker Symbol','Trade Volume']];
+                //var USArray = [['ID','P/E Ratio','Dividend Yield','Ticker Symbol','Trade Volume']];
+                //var CANArray = [['ID','P/E Ratio','Dividend Yield','Ticker Symbol','Trade Volume']];
+               // var tickerArray = [];
+                
+                if (firstLoad) {
+                   // var tickerArray = [];
+                    //chartArray = [['ID','P/E Ratio','Dividend Yield','Ticker Symbol','Trade Volume']];
+                    //console.log(USArray);
+                //if (USFilter) {
+                    // American Dividend Champs.
+                    $.getJSON('tickers/DivChampUS.json', function(file) {
+                        file.query.results.quote.forEach(function(company) {
+                            var subArray = [company.Name, parseFloat(company.PERatio), parseFloat(company.DividendYield), company.symbol, parseFloat(company.Volume)];
+                            chartArray.push(subArray);
+                            //tickerArray.push(company.symbol);
+                        });
+                    });
+               // }
+                
+                //if (CANFilter) {
+                    // Canadian Dividend Champs.
+                    $.getJSON('tickers/DivChampCAN.json', function(file) {
+                        file.query.results.quote.forEach(function(company) {
+                            var subArray = [company.Name, parseFloat(company.PERatio), parseFloat(company.DividendYield), company.symbol, parseFloat(company.Volume)];
+                            chartArray.push(subArray);
+                            //tickerArray.push(company.symbol);
+                        });
+                    });
+                //}
+                }
+                else {
+                    if (USFilter)
+                        for (var i = 0; i < USArray.length; i++)
+                            chartArray.push(USArray[i]);
+                    if (CANFilter)
+                        for (var i = 0; i < CANArray.length; i++)
+                            chartArray.push(CANArray[i]);
+                }
+                //console.log(chartArray);
+                
+                
+                var chart;
+                // Load the chart from Google.
+                if (firstLoad) {
+                    google.load("visualization", "1", {packages:["corechart"]});
+                    google.setOnLoadCallback(drawChart);
+                }
+                else {
+                    drawChart();
+                    
+                }
+                
+                function drawChart() {
+                    
+                    var data = google.visualization.arrayToDataTable(chartArray);
+                    
+                    var options = {
+                        // Options for the chart. Info at
+                        // https://google-developers.appspot.com/chart/interactive/docs/gallery/bubblechart
+                        hAxis: {title: 'P/E Ratio', baselineColor: 'none', gridlines: {color: 'none'}},
+                        vAxis: {title: 'Dividend Yield', baselineColor: 'none', gridlines: {color: 'none'}},
+                        bubble: {textStyle: {color: 'none'}},
+                        legend: {position: 'none'},
+                        chartArea: {left: 50, top: 0, width:"95%", height:"90%"},
+                        backgroundColor: '#fff',
+                        explorer: {keepInBounds: true, maxZoomOut: 1}
+                    };
 
-                var options = {
-                    hAxis: {title: 'PERatio', gridlines: {color: 'none'}},
-                    vAxis: {title: 'Dividend Yield', gridlines: {color: 'none'}},
-                    bubble: {textStyle: {color: 'none'}},
-                    legend: {position: 'none'},
-                    chartArea: {left: 50, top: 0, width:"90%", height:"80%"},
-                    explorer: {}
-                };
-
-                chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
-                chart.draw(data, options);
-                google.visualization.events.addListener(chart, 'select', selectHandler);
+                    // Draw the chart.
+                    chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+                    google.visualization.events.addListener(chart, 'select', selectHandler);
+                }
+            
+                
+                // Bubble selection handler. Calls search on the ticker symbol of the bubble 
+                // that was chosen.
+                function selectHandler() {
+                    var s = chart.getSelection();
+                    var row = s["0"].row;
+                    search(tickerArray[row]);
+                }
             }
             
-            function selectHandler() {
-                var s = chart.getSelection();
-                var row = s["0"].row;
-                search(tickerArray[row]);
-            }
-            
+            // Load the stock page with the specific stock as an argument.
             function search(term) {
-                console.log(term);
+                term = term || document.getElementById('searchBox').value;
+                if (term)
+                    window.location.href = "stock.html?" + term;
             }
             
-            function searchFromInput() {
-                search(document.getElementById('searchBox').value);
-            }
+            makeChart(true);
+            
         </script>
     </head>
 
     <body>
         <section id="main-content">
             
-            <section id="left-panel">
+            <section id="top-panel">
                 <!-- HTML Search bar -->
-                <h1>Stock App
-                    <input type="text" id="searchBox" name="searchBox">
-                    <input type="submit" id="searchButton" onClick="searchFromInput()">
-                </h1>
+                <h1 id="title">Stock App</h1>
+                <div id="sBox">
+                    <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
+                    <input type="submit" id="searchButton" value="Search" onClick="search()">
+                </div>
             </section>
-            <div id="chart_div" style="width: 1000px; height: 550px;"></div>
+            <h2 id="open_filters">Filters</h3>
+            <div id="filter_div">
+                <p>Country<br>
+                    <input type="checkbox" id="USFilter" checked> US<br>
+                    <input type="checkbox" id="CANFilter" checked> Canada
+                </p>
+                <p>test!</p>
+                <p>test!</p>
+                <h3 id="filter_btn">Filter</h3>
+            </div>
+            <div id="chart_div"></div>
             
         </section>
     </body>
