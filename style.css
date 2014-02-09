@@ -10,7 +10,7 @@ h1 {
 }
 
 section#main-content {
-    width: 1200px;
+    width: 1100px;
     margin: 5px auto;
     background-color: #fff;
     height: 500px;
@@ -78,7 +78,7 @@ div#filter_div, h2#open_filters {
     z-index: 2;
     right: 0;
     background-color: #fff;
-    width: 120px;
+    width: 170px;
     padding: 10px 15px;
     border-bottom-left-radius: 10px;
 }
@@ -94,9 +94,40 @@ h2#open_filters {
     border-top-left-radius: 10px;
 }
 
+div#range_div, h3#open_ranges {
+    border: thin solid #8b8b8b;
+    padding: 10px 15px;
+}
+
+div#range_div {
+    background-color: #fff;
+    margin-top: -20px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top: none;
+}
+
+h3#open_ranges {
+    border-radius: 5px;
+}
+
 h3#filter_btn {
     border-radius: 5px;
     padding: 5px;
+    margin-bottom: 5px;
     text-align: center;
+}
+
+input#PERange, input#DivRange {
+    border: none; 
+    width: 60px;
+    color: #f6931f; 
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+div#PERatio_slider, div#Div_slider {
+    margin-top: -11px;
+    margin-bottom: 20px;
 }
 
