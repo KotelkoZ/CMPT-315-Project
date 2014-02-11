@@ -1,0 +1,395 @@
+{
+ "query": {
+  "count": 49,
+  "created": "2014-02-05T04:02:14Z",
+  "lang": "en-US",
+  "diagnostics": {
+   "url": [
+    {
+     "execution-start-time": "1",
+     "execution-stop-time": "36",
+     "execution-time": "35",
+     "content": "http://www.datatables.org/yahoo/finance/yahoo.finance.quotes.xml"
+    },
+    {
+     "execution-start-time": "41",
+     "execution-stop-time": "266",
+     "execution-time": "225",
+     "content": "http://download.finance.yahoo.com/d/quotes.csv?f=aa2bb2b3b4cc1c3c6c8dd1d2ee1e7e8e9ghjkg1g3g4g5g6ii5j1j3j4j5j6k1k2k4k5ll1l2l3mm2m3m4m5m6m7m8nn4opp1p2p5p6qrr1r2r5r6r7ss1s7t1t7t8vv1v7ww1w4xy&s=FTS.TO,CU.TO,CWB.TO,ACO.X,TRI.TO,EMP.A,ESI.TO,IMO.TO,MRU.TO,CNR.TO,ENB.TO,HCG.TO,SAP.TO,CNQ.TO,SNC.TO,TRP.TO,CTY.TO,FTT.TO,MHR.TO,RGL.TO"
+    },
+    {
+     "execution-start-time": "41",
+     "execution-stop-time": "296",
+     "execution-time": "255",
+     "content": "http://download.finance.yahoo.com/d/quotes.csv?f=aa2bb2b3b4cc1c3c6c8dd1d2ee1e7e8e9ghjkg1g3g4g5g6ii5j1j3j4j5j6k1k2k4k5ll1l2l3mm2m3m4m5m6m7m8nn4opp1p2p5p6qrr1r2r5r6r7ss1s7t1t7t8vv1v7ww1w4xy&s=GLN.TO,CAE.TO,FNV.TO,HLF.TO,LB.TO,MDI.TO,TCS.TO,BCE.TO,MIC.TO"
+    },
+    {
+     "execution-start-time": "41",
+     "execution-stop-time": "344",
+     "execution-time": "303",
+     "content": "http://download.finance.yahoo.com/d/quotes.csv?f=aa2bb2b3b4cc1c3c6c8dd1d2ee1e7e8e9ghjkg1g3g4g5g6ii5j1j3j4j5j6k1k2k4k5ll1l2l3mm2m3m4m5m6m7m8nn4opp1p2p5p6qrr1r2r5r6r7ss1s7t1t7t8vv1v7ww1w4xy&s=PSI.TO,RBA.TO,SU.TO,WFI.TO,CCA.TO,CMG.TO,MKP.TO,T.TO,CGO.TO,IFC.TO,SCL.TO,SJ.TO,ACD.TO,BDT.TO,XTC.TO,GS.TO,THI.TO,EMA.TO,ESL.TO,ET.TO"
+    }
+   ],
+   "publiclyCallable": "true",
+   "cache": [
+    {
+     "execution-start-time": "40",
+     "execution-stop-time": "40",
+     "execution-time": "0",
+     "method": "GET",
+     "type": "MEMCACHED",
+     "content": "c7570b39f80748ad6afbbe8112eb8a8d"
+    },
+    {
+     "execution-start-time": "39",
+     "execution-stop-time": "40",
+     "execution-time": "1",
+     "method": "GET",
+     "type": "MEMCACHED",
+     "content": "c7570b39f80748ad6afbbe8112eb8a8d"
+    },
+    {
+     "execution-start-time": "39",
+     "execution-stop-time": "40",
+     "execution-time": "1",
+     "method": "GET",
+     "type": "MEMCACHED",
+     "content": "c7570b39f80748ad6afbbe8112eb8a8d"
+    }
+   ],
+   "query": [
+    {
+     "execution-start-time": "40",
+     "execution-stop-time": "269",
+     "execution-time": "229",
+     "params": "{url=[http://download.finance.yahoo.com/d/quotes.csv?f=aa2bb2b3b4cc1c3c6c8dd1d2ee1e7e8e9ghjkg1g3g4g5g6ii5j1j3j4j5j6k1k2k4k5ll1l2l3mm2m3m4m5m6m7m8nn4opp1p2p5p6qrr1r2r5r6r7ss1s7t1t7t8vv1v7ww1w4xy&s=FTS.TO,CU.TO,CWB.TO,ACO.X,TRI.TO,EMP.A,ESI.TO,IMO.TO,MRU.TO,CNR.TO,ENB.TO,HCG.TO,SAP.TO,CNQ.TO,SNC.TO,TRP.TO,CTY.TO,FTT.TO,MHR.TO,RGL.TO]}",
+     "content": "select * from csv where url=@url and columns='Ask,AverageDailyVolume,Bid,AskRealtime,BidRealtime,BookValue,Change&PercentChange,Change,Commission,ChangeRealtime,AfterHoursChangeRealtime,DividendShare,LastTradeDate,TradeDate,EarningsShare,ErrorIndicationreturnedforsymbolchangedinvalid,EPSEstimateCurrentYear,EPSEstimateNextYear,EPSEstimateNextQuarter,DaysLow,DaysHigh,YearLow,YearHigh,HoldingsGainPercent,AnnualizedGain,HoldingsGain,HoldingsGainPercentRealtime,HoldingsGainRealtime,MoreInfo,OrderBookRealtime,MarketCapitalization,MarketCapRealtime,EBITDA,ChangeFromYearLow,PercentChangeFromYearLow,LastTradeRealtimeWithTime,ChangePercentRealtime,ChangeFromYearHigh,PercebtChangeFromYearHigh,LastTradeWithTime,LastTradePriceOnly,HighLimit,LowLimit,DaysRange,DaysRangeRealtime,FiftydayMovingAverage,TwoHundreddayMovingAverage,ChangeFromTwoHundreddayMovingAverage,PercentChangeFromTwoHundreddayMovingAverage,ChangeFromFiftydayMovingAverage,PercentChangeFromFiftydayMovingAverage,Name,Notes,Open,PreviousClose,PricePaid,ChangeinPercent,PriceSales,PriceBook,ExDividendDate,PERatio,DividendPayDate,PERatioRealtime,PEGRatio,PriceEPSEstimateCurrentYear,PriceEPSEstimateNextYear,Symbol,SharesOwned,ShortRatio,LastTradeTime,TickerTrend,OneyrTargetPrice,Volume,HoldingsValue,HoldingsValueRealtime,YearRange,DaysValueChange,DaysValueChangeRealtime,StockExchange,DividendYield'"
+    },
+    {
+     "execution-start-time": "40",
+     "execution-stop-time": "297",
+     "execution-time": "257",
+     "params": "{url=[http://download.finance.yahoo.com/d/quotes.csv?f=aa2bb2b3b4cc1c3c6c8dd1d2ee1e7e8e9ghjkg1g3g4g5g6ii5j1j3j4j5j6k1k2k4k5ll1l2l3mm2m3m4m5m6m7m8nn4opp1p2p5p6qrr1r2r5r6r7ss1s7t1t7t8vv1v7ww1w4xy&s=GLN.TO,CAE.TO,FNV.TO,HLF.TO,LB.TO,MDI.TO,TCS.TO,BCE.TO,MIC.TO]}",
+     "content": "select * from csv where url=@url and columns='Ask,AverageDailyVolume,Bid,AskRealtime,BidRealtime,BookValue,Change&PercentChange,Change,Commission,ChangeRealtime,AfterHoursChangeRealtime,DividendShare,LastTradeDate,TradeDate,EarningsShare,ErrorIndicationreturnedforsymbolchangedinvalid,EPSEstimateCurrentYear,EPSEstimateNextYear,EPSEstimateNextQuarter,DaysLow,DaysHigh,YearLow,YearHigh,HoldingsGainPercent,AnnualizedGain,HoldingsGain,HoldingsGainPercentRealtime,HoldingsGainRealtime,MoreInfo,OrderBookRealtime,MarketCapitalization,MarketCapRealtime,EBITDA,ChangeFromYearLow,PercentChangeFromYearLow,LastTradeRealtimeWithTime,ChangePercentRealtime,ChangeFromYearHigh,PercebtChangeFromYearHigh,LastTradeWithTime,LastTradePriceOnly,HighLimit,LowLimit,DaysRange,DaysRangeRealtime,FiftydayMovingAverage,TwoHundreddayMovingAverage,ChangeFromTwoHundreddayMovingAverage,PercentChangeFromTwoHundreddayMovingAverage,ChangeFromFiftydayMovingAverage,PercentChangeFromFiftydayMovingAverage,Name,Notes,Open,PreviousClose,PricePaid,ChangeinPercent,PriceSales,PriceBook,ExDividendDate,PERatio,DividendPayDate,PERatioRealtime,PEGRatio,PriceEPSEstimateCurrentYear,PriceEPSEstimateNextYear,Symbol,SharesOwned,ShortRatio,LastTradeTime,TickerTrend,OneyrTargetPrice,Volume,HoldingsValue,HoldingsValueRealtime,YearRange,DaysValueChange,DaysValueChangeRealtime,StockExchange,DividendYield'"
+    },
+    {
+     "execution-start-time": "40",
+     "execution-stop-time": "346",
+     "execution-time": "306",
+     "params": "{url=[http://download.finance.yahoo.com/d/quotes.csv?f=aa2bb2b3b4cc1c3c6c8dd1d2ee1e7e8e9ghjkg1g3g4g5g6ii5j1j3j4j5j6k1k2k4k5ll1l2l3mm2m3m4m5m6m7m8nn4opp1p2p5p6qrr1r2r5r6r7ss1s7t1t7t8vv1v7ww1w4xy&s=PSI.TO,RBA.TO,SU.TO,WFI.TO,CCA.TO,CMG.TO,MKP.TO,T.TO,CGO.TO,IFC.TO,SCL.TO,SJ.TO,ACD.TO,BDT.TO,XTC.TO,GS.TO,THI.TO,EMA.TO,ESL.TO,ET.TO]}",
+     "content": "select * from csv where url=@url and columns='Ask,AverageDailyVolume,Bid,AskRealtime,BidRealtime,BookValue,Change&PercentChange,Change,Commission,ChangeRealtime,AfterHoursChangeRealtime,DividendShare,LastTradeDate,TradeDate,EarningsShare,ErrorIndicationreturnedforsymbolchangedinvalid,EPSEstimateCurrentYear,EPSEstimateNextYear,EPSEstimateNextQuarter,DaysLow,DaysHigh,YearLow,YearHigh,HoldingsGainPercent,AnnualizedGain,HoldingsGain,HoldingsGainPercentRealtime,HoldingsGainRealtime,MoreInfo,OrderBookRealtime,MarketCapitalization,MarketCapRealtime,EBITDA,ChangeFromYearLow,PercentChangeFromYearLow,LastTradeRealtimeWithTime,ChangePercentRealtime,ChangeFromYearHigh,PercebtChangeFromYearHigh,LastTradeWithTime,LastTradePriceOnly,HighLimit,LowLimit,DaysRange,DaysRangeRealtime,FiftydayMovingAverage,TwoHundreddayMovingAverage,ChangeFromTwoHundreddayMovingAverage,PercentChangeFromTwoHundreddayMovingAverage,ChangeFromFiftydayMovingAverage,PercentChangeFromFiftydayMovingAverage,Name,Notes,Open,PreviousClose,PricePaid,ChangeinPercent,PriceSales,PriceBook,ExDividendDate,PERatio,DividendPayDate,PERatioRealtime,PEGRatio,PriceEPSEstimateCurrentYear,PriceEPSEstimateNextYear,Symbol,SharesOwned,ShortRatio,LastTradeTime,TickerTrend,OneyrTargetPrice,Volume,HoldingsValue,HoldingsValueRealtime,YearRange,DaysValueChange,DaysValueChangeRealtime,StockExchange,DividendYield'"
+    }
+   ],
+   "javascript": [
+    {
+     "execution-start-time": "38",
+     "execution-stop-time": "359",
+     "execution-time": "320",
+     "instructions-used": "2009659",
+     "table-name": "yahoo.finance.quotes"
+    },
+    {
+     "execution-start-time": "38",
+     "execution-stop-time": "421",
+     "execution-time": "383",
+     "instructions-used": "4182280",
+     "table-name": "yahoo.finance.quotes"
+    },
+    {
+     "execution-start-time": "38",
+     "execution-stop-time": "492",
+     "execution-time": "454",
+     "instructions-used": "5641387",
+     "table-name": "yahoo.finance.quotes"
+    }
+   ],
+   "user-time": "505",
+   "service-time": "820",
+   "build-version": "0.2.2157"
+  },
+  "results": {
+   "quote": [
+    {
+     "symbol": "FTS.TO",
+     "Name": "Fortis Inc",
+     "PERatio": "17.64",
+     "Volume": "412151",
+     "DividendYield": "4.19"
+    },
+    {
+     "symbol": "CU.TO",
+     "Name": "Canadian Utilities",
+     "PERatio": "16.57",
+     "Volume": "334326",
+     "DividendYield": "2.66"
+    },
+    {
+     "symbol": "CWB.TO",
+     "Name": "Canadian Western Bank",
+     "PERatio": "15.24",
+     "Volume": "112687",
+     "DividendYield": "2.11"
+    },
+    {
+     "symbol": "TRI.TO",
+     "Name": "Thompson Reuters",
+     "PERatio": "34.90",
+     "Volume": "1238846",
+     "DividendYield": "3.30"
+    },
+    {
+     "symbol": "ESI.TO",
+     "Name": "Ensign Energy Services",
+     "PERatio": "16.48",
+     "Volume": "153762",
+     "DividendYield": "2.91"
+    },
+    {
+     "symbol": "IMO.TO",
+     "Name": "Imperial Oil",
+     "PERatio": "13.61",
+     "Volume": "444583",
+     "DividendYield": "1.14"
+    },
+    {
+     "symbol": "MRU.TO",
+     "Name": "Metro Inc",
+     "PERatio": "8.55",
+     "Volume": "284503",
+     "DividendYield": "1.90"
+    },
+    {
+     "symbol": "CNR.TO",
+     "Name": "Canadian National Railway",
+     "PERatio": "18.94",
+     "Volume": "1162850",
+     "DividendYield": "1.70"
+    },
+    {
+     "symbol": "ENB.TO",
+     "Name": "Enbridge Inc",
+     "PERatio": "42.48",
+     "Volume": "940224",
+     "DividendYield": "3.02"
+    },
+    {
+     "symbol": "HCG.TO",
+     "Name": "Home Capital Group",
+     "PERatio": "10.68",
+     "Volume": "100820",
+     "DividendYield": "1.47"
+    },
+    {
+     "symbol": "SAP.TO",
+     "Name": "Saputo Inc",
+     "PERatio": "20.35",
+     "Volume": "216250",
+     "DividendYield": "1.77"
+    },
+    {
+     "symbol": "CNQ.TO",
+     "Name": "Canadian Natural Resources",
+     "PERatio": "17.90",
+     "Volume": "3213338",
+     "DividendYield": "2.21"
+    },
+    {
+     "symbol": "TRP.TO",
+     "Name": "Transcanada Corp",
+     "PERatio": "21.36",
+     "Volume": "1068727",
+     "DividendYield": "3.81"
+    },
+    {
+     "symbol": "CTY.TO",
+     "Name": "Calian Technologies",
+     "PERatio": "12.97",
+     "Volume": "6717",
+     "DividendYield": "4.99"
+    },
+    {
+     "symbol": "FTT.TO",
+     "Name": "Finning International",
+     "PERatio": "13.08",
+     "Volume": "428838",
+     "DividendYield": "2.32"
+    },
+    {
+     "symbol": "MHR.TO",
+     "Name": "Mcgraw-Hill Ryerson Limited",
+     "PERatio": "10.54",
+     "Volume": "200",
+     "DividendYield": "2.93"
+    },
+    {
+     "symbol": "RBA.TO",
+     "Name": "Ritchie Bros Auct",
+     "PERatio": "31.46",
+     "Volume": "272746",
+     "DividendYield": "2.09"
+    },
+    {
+     "symbol": "SU.TO",
+     "Name": "Suncor Energy Inc",
+     "PERatio": "18.18",
+     "Volume": "5470565",
+     "DividendYield": "2.24"
+    },
+    {
+     "symbol": "WFI.TO",
+     "Name": "Waterfurnace Renewable Energy, Inc",
+     "PERatio": "21.08",
+     "Volume": "1741",
+     "DividendYield": "4.45"
+    },
+    {
+     "symbol": "CCA.TO",
+     "Name": "Cogeco Cable Inc",
+     "PERatio": "12.84",
+     "Volume": "58232",
+     "DividendYield": "2.21"
+    },
+    {
+     "symbol": "CMG.TO",
+     "Name": "Computer Modelling Group",
+     "PERatio": "39.47",
+     "Volume": "37269",
+     "DividendYield": "2.68"
+    },
+    {
+     "symbol": "T.TO",
+     "Name": "Telus Corp",
+     "PERatio": "18.00",
+     "Volume": "1047777",
+     "DividendYield": "3.75"
+    },
+    {
+     "symbol": "CGO.TO",
+     "Name": "Cogeco Inc",
+     "PERatio": "11.91",
+     "Volume": "304012",
+     "DividendYield": "1.68"
+    },
+    {
+     "symbol": "IFC.TO",
+     "Name": "Intact Financial",
+     "PERatio": "17.82",
+     "Volume": "319525",
+     "DividendYield": "2.63"
+    },
+    {
+     "symbol": "SCL.TO",
+     "Name": "Shawcor Ltd",
+     "PERatio": "9.29",
+     "Volume": "260537",
+     "DividendYield": "1.25"
+    },
+    {
+     "symbol": "SJ.TO",
+     "Name": "Stella-Jones Inc",
+     "PERatio": "19.41",
+     "Volume": "58041",
+     "DividendYield": "0.79"
+    },
+    {
+     "symbol": "ACD.TO",
+     "Name": "Accord Financial Corp",
+     "PERatio": "13.18",
+     "Volume": "8200",
+     "DividendYield": "3.15"
+    },
+    {
+     "symbol": "BDT.TO",
+     "Name": "Bird Construction Inc",
+     "PERatio": "18.07",
+     "Volume": "15291",
+     "DividendYield": "5.23"
+    },
+    {
+     "symbol": "XTC.TO",
+     "Name": "Exco Technologies Ltd",
+     "PERatio": "13.41",
+     "Volume": "42710",
+     "DividendYield": "2.44"
+    },
+    {
+     "symbol": "GS.TO",
+     "Name": "Gluskin Sheff and Associates",
+     "PERatio": "16.14",
+     "Volume": "91791",
+     "DividendYield": "2.83"
+    },
+    {
+     "symbol": "THI.TO",
+     "Name": "Tim Hortons Inc",
+     "PERatio": "20.32",
+     "Volume": "575619",
+     "DividendYield": "1.84"
+    },
+    {
+     "symbol": "EMA.TO",
+     "Name": "Emera Inc",
+     "PERatio": "17.05",
+     "Volume": "349820",
+     "DividendYield": "4.57"
+    },
+    {
+     "symbol": "ESL.TO",
+     "Name": "Enghouse Systems Ltd",
+     "PERatio": "34.86",
+     "Volume": "21871",
+     "DividendYield": "0.98"
+    },
+    {
+     "symbol": "ET.TO",
+     "Name": "Evertz Technologies Ltd",
+     "PERatio": "25.68",
+     "Volume": "13972",
+     "DividendYield": "3.78"
+    },
+    {
+     "symbol": "GLN.TO",
+     "Name": "Glentel Inc",
+     "PERatio": "40.45",
+     "Volume": "5526",
+     "DividendYield": "3.90"
+    },
+    {
+     "symbol": "CAE.TO",
+     "Name": "CAE Inc",
+     "PERatio": "21.72",
+     "Volume": "594831",
+     "DividendYield": "1.73"
+    },
+    {
+     "symbol": "HLF.TO",
+     "Name": "High Liner Foods Inc",
+     "PERatio": "32.46",
+     "Volume": "6518",
+     "DividendYield": "1.77"
+    },
+    {
+     "symbol": "LB.TO",
+     "Name": "Laurentian Bank of Canada",
+     "PERatio": "11.33",
+     "Volume": "92679",
+     "DividendYield": "4.51"
+    },
+    {
+     "symbol": "BCE.TO",
+     "Name": "BCE Inc",
+     "PERatio": "15.40",
+     "Volume": "1278907",
+     "DividendYield": "5.06"
+    },
+    {
+     "symbol": "MIC.TO",
+     "Name": "Genworth MI Canada Inc",
+     "PERatio": "6.36",
+     "Volume": "372844",
+     "DividendYield": "4.26"
+    }
+   ]
+  }
+ }
+}
