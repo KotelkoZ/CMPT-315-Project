@@ -9,8 +9,12 @@ h1 {
     font-size: 4.0em;
 }
 
+h2 {
+    font-size: 2.0em;
+}
+
 section#main-content {
-    width: 1100px;
+    width: 1200px;
     margin: 5px auto;
     background-color: #fff;
     height: 500px;
@@ -68,31 +72,42 @@ input#searchButton:hover {
     background-color: #535389;
 }
 
-div#filter_div, h2#open_filters, input#searchBox, input#searchButton, h3#filter_btn {
+div#filter_div, input#searchBox, input#searchButton, h3#filter_btn {
     border: thin solid #8b8b8b;
 }
 
 
-div#filter_div, h2#open_filters {
-    position: absolute;
-    z-index: 2;
-    right: 0;
+div#filter_div {
+    display: table-cell;
+    vertical-align: top;
     background-color: #fff;
     width: 170px;
-    padding: 10px 15px;
-    border-bottom-left-radius: 10px;
+    padding: 0px 15px;
+    border-radius: 10px;
 }
 
-div#filter_div {
-    top: 130px;
-    border-top: none;
+
+div#chart_div {
+    display: table-cell;
+    width: 1030px;
+    max-height: 520px;
 }
 
-h2#open_filters {
-    font-size: 2.0em;
-    top: 65px;
-    border-top-left-radius: 10px;
+div#table_container {
+	display: table;
+	border-spacing: 10px;
 }
+
+div#table_row {
+	display: table-row;
+}
+
+
+
+
+
+
+
 
 div#range_div, h3#open_ranges {
     border: thin solid #8b8b8b;
@@ -118,16 +133,8 @@ h3#filter_btn {
     text-align: center;
 }
 
-input#PERange, input#DivRange {
-    border: none; 
-    width: 60px;
-    color: #f6931f; 
-    font-weight: bold;
-    padding-left: 10px;
-}
 
-div#PERatio_slider, div#Div_slider {
-    margin-top: -11px;
-    margin-bottom: 20px;
+p.slider_label {
+    font-size: 0.8em;
 }
 
