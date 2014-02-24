@@ -73,7 +73,7 @@ input#searchButton:hover {
     background-color: #535389;
 }
 
-div#filter_div, input#searchBox, input#searchButton, h3#filter_btn, h3#open_ranges {
+input#searchBox, input#searchButton, h3#filter_btn, h3#open_ranges {
     border: thin solid #8b8b8b;
 }
 
@@ -82,8 +82,8 @@ div#filter_div {
     display: table-cell;
     vertical-align: top;
     background-color: #fff;
-    border-radius: 10px;
     padding-bottom: 0px;
+    border-right: thin dotted gray;
 }
 
 div#filter_table {
@@ -96,7 +96,7 @@ div#filter_table_main {
 
 div#filter_table_ranges {
     width: 0px;
-    padding: 0px 5px 0px 15px;
+    padding: 0px 10px 0px 20px;
     border-left: thin dotted gray;
 }
 
@@ -104,7 +104,7 @@ div#filter_table_ranges {
 div#chart_div {
     display: table-cell;
     width: 1030px;
-    max-height: 520px;
+    height: 500px;
 }
 
 div.table_cell {

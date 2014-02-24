@@ -113,12 +113,16 @@ function makeChart() {
     e = document.getElementById('BSelect');
     var bValue = e.options[e.selectedIndex];
     var chartArray = [['ID', xValue.text, yValue.text, 'Company Name', bValue.text]];
+    var exchangeMap = {};
                 
     companyObject.forEach(function(c) {
         // For each company, check if they satisfy the filters. 
-        if (satisfyFilters(c))
+        if (satisfyFilters(c)) {
             chartArray.push([c.Symbol, parseFloat(c[xValue.value]), parseFloat(c[yValue.value]),c.Name, Math.abs(parseFloat(c[bValue.value]))]);
+            exchangeMap[c.Symbol] = c.StockExchange;
+        }
     });
+    
                 
     // minus one because of title entry in the chartArray.
     document.getElementById('filter_title').innerHTML = 'Filters - ' + (chartArray.length - 1);
@@ -155,5 +159,5 @@ function makeChart() {
 function search(term) {
     term = term || document.getElementById('searchBox').value;
     if (term)
-    window.location.href = "stock.html?" + term;
+        window.location.href = "stock.html?" + term;
 }

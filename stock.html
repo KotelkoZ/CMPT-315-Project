@@ -4,6 +4,50 @@
         <meta charset="utf-8">
         <title>315 Project</title>
         <link rel="stylesheet" type="text/css" href="315-project.css">
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        
+        <script>
+         
+            var term = window.location.search.substring(1);
+            var code;
+            var source;
+            
+            $.getJSON('http://www.quandl.com/api/v1/datasets.json?auth_token=iT1LrBo1Uw79uqJfrKyb&query=' + term, function(c) {
+                if (c['total_count'] > 0) {
+                    // Look for a company with the given search term. If one is found, go through the data and call getData
+                    // on the first entry found from google. Only google has the correct data we want.
+                    var info = c.docs;
+                    for (var i = 0; i < info.length; i++) {
+                        if (info[i]['source_code'] === 'GOOG') {
+                            code = info[i]['code'];
+                            getData('GOOG/' + code);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    // no results from search   
+                }
+            });
+                            
+            function getData(path) {
+                // get the JSON file from quandl.
+                var url = "http://www.quandl.com/api/v1/datasets/" + path + ".json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+                    
+                $.getJSON(url, function(company) {
+                                    
+                    var output = "<table id='stock-table'><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Volume</th></tr>";
+                    company.data.forEach(function(data) {
+                        output += "<tr><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2] + "</td><td>" + data[3] + "</td><td>" + data[4] + "</td></tr>";
+                    });
+                    output += "</table>";
+                    document.getElementById("main-panel").innerHTML = output;
+                });
+            }
+                            
+                            
+        </script>
+        
     </head>
     <body>
         <header class="top"></header>
@@ -20,46 +64,7 @@
                     </section>   
                     <section id="main-panel">
                         
-                        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-                        <script>
-                            function getParam() {
-                                var params = [];
-                                var url = window.location.search.substring(1);
-                                if (url) {
-                                    var a = url.split("=")[1];
-                                    params.push(a.split("/")[0]);
-                                    a = a.split("/")[1];
-                                    params.push(a.split("_")[0]);
-                                    params.push(a.split("_")[1]);
-                                }
-                                return params;
-                            }
-                            
-                            var parameters = getParam();
-                            if (parameters) {
-                                <!-- if this page was called for a specific company -->
-                                    
-                                var website = parameters[0];
-                                var exchange = parameters[1];
-                                var ticker = parameters[2];
-                                var url = "http://www.quandl.com/api/v1/datasets/" + website + "/" + exchange + "_" + ticker + ".json";
-                                
-                                <!-- get the json file from quandl -->
-                                $.getJSON(url + '?auth_token=iT1LrBo1Uw79uqJfrKyb', function(company) {
-                                    
-                                    var output = "<table id='stock-table'><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Volume</th></tr>";
-                                    company.data.forEach(function(data) {
-                                        output += "<tr><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2] + "</td><td>" + data[3] + "</td><td>" + data[4] + "</td></tr>";
-                                    });
-                                    output += "</table>";
-                                    document.getElementById("main-panel").innerHTML = output;
-                                });
-                            }
-                            
-                            
-                            
-                            
-                        </script>
+                        
                     
                     
                     </section>
