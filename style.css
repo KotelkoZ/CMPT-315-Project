@@ -9,8 +9,13 @@ h1 {
     font-size: 4.0em;
 }
 
+h2 {
+    font-size: 2.0em;
+    margin-top: 0px;
+}
+
 section#main-content {
-    width: 1100px;
+    width: 1200px;
     margin: 5px auto;
     background-color: #fff;
     height: 500px;
@@ -68,65 +73,67 @@ input#searchButton:hover {
     background-color: #535389;
 }
 
-div#filter_div, h2#open_filters, input#searchBox, input#searchButton, h3#filter_btn {
+div#filter_div, input#searchBox, input#searchButton, h3#filter_btn, h3#open_ranges {
     border: thin solid #8b8b8b;
 }
 
-
-div#filter_div, h2#open_filters {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    background-color: #fff;
-    width: 170px;
-    padding: 10px 15px;
-    border-bottom-left-radius: 10px;
-}
 
 div#filter_div {
-    top: 130px;
-    border-top: none;
-}
-
-h2#open_filters {
-    font-size: 2.0em;
-    top: 65px;
-    border-top-left-radius: 10px;
-}
-
-div#range_div, h3#open_ranges {
-    border: thin solid #8b8b8b;
-    padding: 10px 15px;
-}
-
-div#range_div {
+    display: table-cell;
+    vertical-align: top;
     background-color: #fff;
-    margin-top: -20px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top: none;
+    border-radius: 10px;
+    padding-bottom: 0px;
 }
 
-h3#open_ranges {
-    border-radius: 5px;
+div#filter_table {
+    padding-top: -10px;
 }
 
-h3#filter_btn {
+div#filter_table_main {
+    display: table-cell;
+}
+
+div#filter_table_ranges {
+    width: 0px;
+    padding: 0px 5px 0px 15px;
+    border-left: thin dotted gray;
+}
+
+
+div#chart_div {
+    display: table-cell;
+    width: 1030px;
+    max-height: 520px;
+}
+
+div.table_cell {
+    display: table-cell;
+}
+
+div.table_container {
+	display: table;
+	border-spacing: 10px;
+}
+
+div.table_row {
+	display: table-row;
+}
+
+
+
+
+
+
+
+h3.btn {
     border-radius: 5px;
     padding: 5px;
     margin-bottom: 5px;
     text-align: center;
 }
 
-input#PERange, input#DivRange {
-    border: none; 
-    width: 60px;
-    color: #f6931f; 
-    font-weight: bold;
-    padding-left: 10px;
-}
 
-div#PERatio_slider, div#Div_slider {
-    margin-top: -11px;
-    margin-bottom: 20px;
+p.slider_label {
+    font-size: 0.8em;
 }
