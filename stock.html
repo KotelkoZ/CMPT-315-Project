@@ -3,46 +3,86 @@
     <head>
         <meta charset="utf-8">
         <title>315 Project</title>
-        <link rel="stylesheet" type="text/css" href="315-project.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" media="all" />
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
         
         <script>
-         
-            var term = window.location.search.substring(1);
-            var code;
-            var source;
+            var companies = {};
             
-            $.getJSON('http://www.quandl.com/api/v1/datasets.json?auth_token=iT1LrBo1Uw79uqJfrKyb&query=' + term, function(c) {
-                if (c['total_count'] > 0) {
-                    // Look for a company with the given search term. If one is found, go through the data and call getData
-                    // on the first entry found from google. Only google has the correct data we want.
-                    var info = c.docs;
-                    for (var i = 0; i < info.length; i++) {
-                        if (info[i]['source_code'] === 'GOOG') {
-                            code = info[i]['code'];
-                            getData('GOOG/' + code);
-                            break;
-                        }
-                    }
-                }
-                else {
-                    // no results from search   
-                }
-            });
+            google.load('visualization', '1', {'packages':['annotatedtimeline']});
+            
+            //getData(window.location.search.substring(1));
+            getData("A");
+            getData("AA");
+            getData("MSFT");
                             
             function getData(path) {
                 // get the JSON file from quandl.
-                var url = "http://www.quandl.com/api/v1/datasets/" + path + ".json?auth_token=iT1LrBo1Uw79uqJfrKyb";
-                    
+                //var url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + path + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+                
+                var url = "tickers/" + path + ".json";
+                
                 $.getJSON(url, function(company) {
-                                    
-                    var output = "<table id='stock-table'><tr><th>Date</th><th>Open</th><th>High</th><th>Low</th><th>Volume</th></tr>";
-                    company.data.forEach(function(data) {
-                        output += "<tr><td>" + data[0] + "</td><td>" + data[1] + "</td><td>" + data[2] + "</td><td>" + data[3] + "</td><td>" + data[4] + "</td></tr>";
-                    });
-                    output += "</table>";
-                    document.getElementById("main-panel").innerHTML = output;
+                    if (company.error === undefined) {
+                        var name = company["name"].split(" - ")[0];
+                        var column_names = company.column_names;
+                        var data = company.data;
+                        companies[name] = {"column_names":column_names, "data":data};
+                        makeChart();
+                    } else {
+                        // no results for the query
+                    }
                 });
+            }
+            
+            
+            function maxCompany(companies) {
+                // Return the name of the company in the companies map that has the most years of data.
+                var c = undefined;
+                var max = 0;
+                for (var name in companies) {
+                    if (companies[name]["data"].length > max) {
+                        c = name;
+                    }
+                }
+                return c;
+            }
+            
+            function makeChart() {
+                var index = 0;
+                
+                google.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    
+                    // Add a date column to the chart, then a column for each company in companies map.
+                    data.addColumn('date', 'Date');
+                    for (var company_name in companies) {
+                        data.addColumn('number', company_name);
+                    }
+                    
+                    // find the company with the most year entries.
+                
+                    var rows = [];
+                    for (var i = 0; i < companies[maxLengthCompany]["data"].length; i++) {
+                        // Starting at 0, loop up to the last year in the company with the most years.
+                        // Create a row entry with the date for this year.
+                        var rowEntry = [new Date(companies[maxLengthCompany]["data"][i][0])];
+                        for (var company_name in companies) {
+                            // Go through the companies in the map and add an entry for the current year.
+                            rowEntry.push(companies[company_name]["data"][i][2]);
+                        }
+                        // Push the whole row entry into the row array.
+                        rows.push(rowEntry);
+                    }
+                    data.addRows(rows);
+
+                    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('main_div'));
+                    chart.draw(data, {displayAnnotations: true});
+                }
+
             }
                             
                             
@@ -50,6 +90,20 @@
         
     </head>
     <body>
+        <section id="main-content">
+            
+            <section id="top-panel">
+                <!-- HTML Search bar -->
+                <h1 id="title">Stock App</h1>
+                <div id="sBox">
+                    <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
+                    <input type="submit" id="searchButton" value="Search" onClick="search()">
+                </div>
+            </section>
+        
+            <div id="main_div"><h2>Loading...</h2></div>
+        </section>
+        <!--
         <header class="top"></header>
         <section id="main-content">
             <div id="tableContainer">
@@ -70,6 +124,6 @@
                     </section>
                 </div>
             </div>
-        </section>
+        </section>-->
     </body>
 </html>

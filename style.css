@@ -34,7 +34,11 @@ div#sBox {
 div#chart_div {
     width: 1200px;
     height: 570px;
-    z-index: 1;
+}
+
+div#main_div {
+    width: 1200px;
+    height: 570px;
 }
 
 section#top-panel {
