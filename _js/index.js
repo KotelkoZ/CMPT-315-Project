@@ -150,10 +150,19 @@ function makeChart() {
         search(symbol);
     }
 }
-            
+
+function makeList() {
+    var file = JSON.parse("./QuandlQuery/tickers/AAPL.json");
+    console.log(file.name);
+}
+
 // Load the stock page with the specific stock as an argument.
 function search(term) {
     term = term || document.getElementById('searchBox').value;
     if (term)
     window.location.href = "stock.html?" + term;
+}
+
+function home() {
+    window.location.href = "index.html";
 }

@@ -25,17 +25,23 @@
     </head>
 
     <body onload="done()">
+        
+        
+        <section id="top-panel">
+            <input type="image" id="logo" src="logo.png" alt="logopic" onClick="home()">
+            <div id="sBox">
+                <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
+                <input type="submit" id="searchButton" value="Search" onClick="search()">
+            </div>
+            <div id="list">
+                <form action="stock_list.html">
+                    <input type="submit" id="listButton" value="View Market List">
+                </form>
+            </div>            
+        </section>
+        
+        
         <section id="main-content">
-            
-            <section id="top-panel">
-                <!-- HTML Search bar -->
-                <h1 id="title">Stock App</h1>
-                <div id="sBox">
-                    <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
-                    <input type="submit" id="searchButton" value="Search" onClick="search()">
-                </div>
-            </section>
-            
             <div class="table_container">
             <div class="table_row">
                 
