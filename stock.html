@@ -13,16 +13,16 @@
             
             google.load('visualization', '1', {'packages':['annotatedtimeline']});
             
-            //getData(window.location.search.substring(1));
+            getData(window.location.search.substring(1));
             getData("A");
             getData("AA");
             getData("MSFT");
                             
             function getData(path) {
                 // get the JSON file from quandl.
-                //var url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + path + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+                var url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + path + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
                 
-                var url = "tickers/" + path + ".json";
+                //var url = "tickers/" + path + ".json";
                 
                 $.getJSON(url, function(company) {
                     if (company.error === undefined) {
