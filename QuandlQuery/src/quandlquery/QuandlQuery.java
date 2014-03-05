@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package quandlquery;
 
 import java.io.BufferedReader;
@@ -12,6 +8,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.Iterator;
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -24,10 +26,15 @@ public class QuandlQuery {
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
         QuandlQuery obj = new QuandlQuery();
-        obj.run();
+        //obj.run();
+        obj.createJSON();
+        obj.readJSON();
+        obj.addToJSON();
+        
     }
     
     public void run() throws FileNotFoundException, IOException {
+        
         
         String csvFile = "stockinfo.csv";
 	BufferedReader br = null;
@@ -62,4 +69,48 @@ public class QuandlQuery {
         
         
     }
+    
+    public void readJSON() {
+        
+        JSONParser parser = new JSONParser();
+        
+        try {
+            
+            Object obj = parser.parse(new FileReader("tickers/AAPL.json"));
+            
+            JSONObject jsonObject = (JSONObject) obj;
+ 
+            String name = (String) jsonObject.get("name");
+            System.out.println(name);
+
+
+            // loop array
+            JSONArray data = (JSONArray) jsonObject.get("data");
+            Iterator<JSONArray> iterator = data.iterator();
+            data = iterator.next();
+            System.out.println(data);
+            
+            JSONArray ticker = new JSONArray();
+            ticker.add(name);
+            ticker.add(data);
+            
+            System.out.println(ticker);
+            
+        } catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (ParseException e) {
+		e.printStackTrace();
+	}
+    }
+    
+    public void createJSON() throws FileNotFoundException {
+        FileOutputStream fos = new FileOutputStream("alltickers.json");
+    }
+    
+    public void addToJSON() {
+        
+    }
+    
 }
