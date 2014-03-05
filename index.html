@@ -8,7 +8,7 @@
         <!-- css from google chart -->
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" media="all" />
         <!-- css for sliders -->
-        <link rel="stylesheet" href="_js/egorkhmelev-jslider-060a8c4/css/jslider.css" type="text/css">
+        <link rel="stylesheet" href="_js/slider/css/jslider.css" type="text/css">
         
         <!-- jquery and jquery ui -->
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -16,19 +16,18 @@
         <!-- Google charts script -->
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <!-- Sliders scripts -->
-        <script type="text/javascript" src="_js/egorkhmelev-jslider-060a8c4/js/tmpl.js"></script>
-        <script type="text/javascript" src="_js/egorkhmelev-jslider-060a8c4/js/jquery.dependClass-0.1.js"></script>
-        <script type="text/javascript" src="_js/egorkhmelev-jslider-060a8c4/js/draggable-0.1.js"></script>
-	    <script type="text/javascript" src="_js/egorkhmelev-jslider-060a8c4/js/jquery.slider.js"></script>
+        <script type="text/javascript" src="_js/slider/js/tmpl.js"></script>
+        <script type="text/javascript" src="_js/slider/js/jquery.dependClass-0.1.js"></script>
+        <script type="text/javascript" src="_js/slider/js/draggable-0.1.js"></script>
+	    <script type="text/javascript" src="_js/slider/js/jquery.slider.js"></script>
         <!-- our script -->
         <script type="text/javascript" src="_js/index.js"></script>
     </head>
 
     <body onload="done()">
         
-        
         <section id="top-panel">
-            <input type="image" id="logo" src="logo.png" alt="logopic" onClick="home()">
+            <a href="index.html"><img src="logo.png"></a>
             <div id="sBox">
                 <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
                 <input type="submit" id="searchButton" value="Search" onClick="search()">
@@ -40,11 +39,9 @@
             </div>            
         </section>
         
-        
         <section id="main-content">
-            <div class="table_container">
-            <div class="table_row">
                 
+            
             <div id="filter_div">
                 <div id="filter_table" class="table_container">
                 <div class="table_row">
@@ -104,7 +101,7 @@
                         
                         <h3 id="open_ranges" class="btn">Open Ranges >></h3>
                         <h3 id="filter_btn" class="btn">Filter</h3>
-                    </div>
+                    </div> <!-- // filter_table_main -->
                     
                     
                     <div id="filter_table_ranges">
@@ -138,19 +135,15 @@
                         <p class="slider_label">Dividend Yield<br>
                             <input id="DividendYieldSlider" class="slider" type="text" name="area" value="0;7" />
                         <br></p>
-                    </div>
-                </div>
-                </div>
+                    </div> <!-- // filter_table_ranges -->
+                </div> <!-- // table_row -->
+                </div> <!-- // filter_table -->
                 
                 
-            </div>
+            </div> <!-- // filter_div -->
         
-            <div id="chart_cont">
-                <div id="chart_div"><h2>Loading...</h2></div>
-            </div>
-        
-            </div> <!-- table_row -->
-            </div> <!-- table_container -->
+            <div id="main_div"><div id="chart_div"><h2>Loading...</h2></div></div>
+            
         </section>
     </body>
 </html>
