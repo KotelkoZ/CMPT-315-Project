@@ -36,23 +36,40 @@
                     
                     // Add a date column to the chart, then a column for each company in companies map.
                     data.addColumn('date', 'Date');
-                    for (var company_name in companies) {
-                        data.addColumn('number', company_name);
+                    for (var i = Object.keys(companies).length - 1; i >= 0; i--) {
+                        data.addColumn('number', Object.keys(companies)[i]);
                     }
+                    
                     
                     // find the company with the most year entries.
                     var maxLengthCompany = maxCompany(companies);
-                
+                    
                     var rows = [];
+                    var selectedIndex = document.getElementById('combo').selectedIndex;
+                    var mainTicker = document.getElementById('ticker_title').value;
+                    
                     for (var i = 0; i < companies[maxLengthCompany]["data"].length; i++) {
                         // Starting at 0, loop up to the last year in the company with the most years.
                         // Create a row entry with the date for this year.
                         var rowEntry = [new Date(companies[maxLengthCompany]["data"][i][0])];
+                        
+                        
                         for (var company_name in companies) {
                             // Go through the companies in the map and add an entry for the current year.
-                            rowEntry.push(companies[company_name]["data"][i][2]);
+                                                
+                            var entry = null;
+                            if (i < companies[company_name]["data"].length) {
+                                entry = companies[company_name]["data"][i][selectedIndex + 1]
+                            }
+                            rowEntry.push(entry);
                         }
+                        
                         // Push the whole row entry into the row array.
+                        // Swap the main ticker to the end of the array. This is so that the small grpah 
+                        // on the bottom always shows the main ticker.
+                        var temp = rowEntry[1];
+                        rowEntry[1] = rowEntry[rowEntry.length - 1];
+                        rowEntry[rowEntry.length - 1] = temp;
                         rows.push(rowEntry);
                     }
                     data.addRows(rows);
@@ -76,6 +93,7 @@
                 for (var name in companies) {
                     if (companies[name]["data"].length > max) {
                         c = name;
+                        max = companies[name]["data"].length;
                     }
                 }
                 return c;
@@ -144,8 +162,81 @@
                     <input type="text" id="compareBox" placeholder="Compare With Ticker" name="searchBox">
                     <input type="submit" id="compareButton" value="Compare" onClick="addCompareTicker()">
                 </div>
-                <div id="compared_tickers" class="float_right"></div>
+                
+                
                 <h2 id="ticker_title">Loading...</h2>
+                <div id="compared_tickers" class="float_right">tickerlist</div>
+                <select id='combo'>
+                    <option>Number of Shares Outstanding</option>
+                    <option>3-Year Regression Beta</option>
+                    <option>3-Year Standard Deviation of Stock Price</option>
+                    <option>Book Debt to Capital Ratio</option>
+                    <option>Book Value of Equity</option>
+                    <option>Book Value of Assets</option>
+                    <option>Capital Expenditures</option>
+                    <option>Cash</option>
+                    <option>Cash as Percentage of Firm Value</option>
+                    <option>Cash as Percentage of Revenues</option>
+                    <option>Cash as Percentage of Total Assets</option>
+                    <option>Change in Non-Cash Working Capital</option>
+                    <option>Correlation with the Market</option>
+                    <option>Current PE Ratio</option>
+                    <option>Depreciation</option>
+                    <option>Dividend Yield</option>
+                    <option>Dividends</option>
+                    <option>Earnings Before Interest and Taxes</option>
+                    <option>EBIT for Previous Period</option>
+                    <option>Earnings Before Interest Taxes Depreciation and Amortization</option>
+                    <option>Effective Tax Rate</option>
+                    <option>Effective Tax Rate on Income</option>
+                    <option>Enterprise Value</option>
+                    <option>EV to Invested Capital Ratio</option>
+                    <option>EV to Trailing Sales Ratio</option>
+                    <option>EV to EBIT Ratio</option>
+                    <option>EV to EBITDA Ratio</option>
+                    <option>EV to Sales Ratio</option>
+                    <option>Expected Growth in Earnings Per Share</option>
+                    <option>Expected Growth in Revenues</option>
+                    <option>Free Cash Flow to Firm</option>
+                    <option>Firm Value</option>
+                    <option>Ratio of Fixed Assets to Total Assets</option>
+                    <option>Forward Earnings Per Share</option>
+                    <option>Forward PE Ratio</option>
+                    <option>Growth in Earnings Per Share</option>
+                    <option>Previous Year Growth in Revenues</option>
+                    <option>Hi-Lo Risk</option>
+                    <option>Insider Holdings</option>
+                    <option>Institutional Holdings</option>
+                    <option>Ratio of Intangible Assets to Total Assets</option>
+                    <option>Invested Capital</option>
+                    <option>Market Capitalization</option>
+                    <option>Market Debt to Equity Ratio</option>
+                    <option>Market Debt to Capital Ratio</option>
+                    <option>Net Income</option>
+                    <option>Net Margin</option>
+                    <option>Non-Cash Working Capital</option>
+                    <option>Non-Cash Working Capital as Percentage of Revenues</option>
+                    <option>Payout Ratio</option>
+                    <option>Price to Book Value Ratio</option>
+                    <option>PE to Growth Ratio</option>
+                    <option>Pre-Tax Operating Margin</option>
+                    <option>Price to Sales Ratio</option>
+                    <option>Reinvestment Amount</option>
+                    <option>Reinvestment Rate</option>
+                    <option>Revenues</option>
+                    <option>Return on Capital</option>
+                    <option>Return on Equity</option>
+                    <option>Sales General Administration Expenses</option>
+                    <option>Stock Price</option>
+                    <option>Total Debt</option>
+                    <option>Trading Volume</option>
+                    <option>Trailing 12-month Revenues</option>
+                    <option>Trailing Net Income</option>
+                    <option>Trailing PE Ratio</option>
+                    <option>Trailing Revenues</option>
+                    <option>Value Line Beta</option>
+                </select>
+                <input type="submit" id="updateButton" value="Update Graph" onClick="makeChart()">
                 <div id="stock_chart_div"></div>
             </div>
         </section>

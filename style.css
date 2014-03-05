@@ -133,7 +133,7 @@ div#index_chart_div {
 }
 
 div#stock_chart_div {
-    height: 500px;
+    height: 450px;
     width: 100%; 
     margin-top: 8px;
 }
@@ -142,6 +142,7 @@ div#stock_chart_div {
 
 div#left_column {
     width: calc(100% - 400px);
+    height: calc(100% - 200px);
     min-width: 500px;
 }
 
