@@ -138,7 +138,7 @@ function makeChart() {
     };
 
     // Draw the chart.
-    chart = new google.visualization.BubbleChart(document.getElementById('chart_div'));
+    chart = new google.visualization.BubbleChart(document.getElementById('index_chart_div'));
     chart.draw(dataTable, options);
     google.visualization.events.addListener(chart, 'select', selectHandler);
                 

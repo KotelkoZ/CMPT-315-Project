@@ -12,49 +12,26 @@
             var companies = {};
             
             google.load('visualization', '1', {'packages':['annotatedtimeline']});
+            google.setOnLoadCallback();
             
-            getData(window.location.search.substring(1));
-            getData("A");
-            getData("AA");
-            getData("MSFT");
-                            
-            function getData(path) {
-                // get the JSON file from quandl.
-                var url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + path + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
-                
-                //var url = "tickers/" + path + ".json";
-                
-                $.getJSON(url, function(company) {
-                    if (company.error === undefined) {
-                        var name = company["name"].split(" - ")[0];
-                        var column_names = company.column_names;
-                        var data = company.data;
-                        companies[name] = {"column_names":column_names, "data":data};
-                        makeChart();
-                    } else {
-                        // no results for the query
-                    }
-                });
-            }
-            
-            
-            function maxCompany(companies) {
-                // Return the name of the company in the companies map that has the most years of data.
-                var c = undefined;
-                var max = 0;
-                for (var name in companies) {
-                    if (companies[name]["data"].length > max) {
-                        c = name;
-                    }
-                }
-                return c;
-            }
+            $(document).ready(function() {
+                getData(window.location.search.substring(1));
+                //getData("MSFT");
+                         
+            });  
             
             function makeChart() {
                 var index = 0;
                 
-                google.setOnLoadCallback(drawChart);
+                //if (Object.keys(companies).length > 1) {
+                    drawChart()
+                //} else {
+                    console.log('a');
+                    //google.setOnLoadCallback(drawChart);
+               // }
+                
                 function drawChart() {
+                    console.log('b');
                     var data = new google.visualization.DataTable();
                     
                     // Add a date column to the chart, then a column for each company in companies map.
@@ -79,33 +56,98 @@
                         rows.push(rowEntry);
                     }
                     data.addRows(rows);
-
-                    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
-                    chart.draw(data, {displayAnnotations: true});
+                    
+                    var options = {
+                        displayZoomButtons: false,
+                        fill: 10,
+                        thickness: 5
+                    }
+                    
+                    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('stock_chart_div'));
+                    chart.draw(data, options);
                 }
 
             }
-                            
-                            
+            
+            function maxCompany(companies) {
+                // Return the name of the company in the companies map that has the most years of data.
+                var c = undefined;
+                var max = 0;
+                for (var name in companies) {
+                    if (companies[name]["data"].length > max) {
+                        c = name;
+                    }
+                }
+                return c;
+            }
+            
+            function getData(path) {
+                // get the JSON file from quandl.
+                if (path == "")
+                    return;
+                //var url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + path + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+                
+                var url = "tickers/" + path + ".json";
+                
+                $.getJSON(url, function(company) {
+                    if (company.error === undefined) {
+                        var name = company["name"].split(" - ")[0];
+                        var column_names = company.column_names;
+                        var data = company.data;
+                        companies[name] = {"column_names":column_names, "data":data};
+                        makeChart();
+                        
+                        if (Object.keys(companies).length == 1) {
+                            // Set the title to the name of the company that the page was called with.
+                            document.getElementById('ticker_title').innerHTML = name;
+                        }
+                    } else {
+                        // no results for the query
+                    }
+                });
+            }
+            
+            function addCompareTicker() {
+                var ticker = document.getElementById('compareBox').value;
+                if (ticker) {
+                    getData(ticker);
+                    document.getElementById('compareBox').value = "";
+                }
+            }
+            
+            function search(term) {
+                term = term || document.getElementById('searchBox').value;
+                if (term)
+                    window.location.href = "stock.html?" + term;
+            }
         </script>
         
     </head>
     <body>
-        <section id="main-content">
-            <section id="top-panel">
-                <a href="index.html"><img src="logo.png"></a>
-                <div id="sBox">
-                    <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
-                    <input type="submit" id="searchButton" value="Search" onClick="search()">
-                </div>
-                <div id="list">
-                    <form action="stock_list.html">
-                        <input type="submit" id="listButton" value="View Market List">
-                    </form>
-                </div>            
-            </section>
         
-            <div id="main_div"><div id="chart_div"><h2>Loading...</h2></div></div>
+        <section id="top-panel">
+            <a href="index.html"><img src="logo.png"></a>
+            <div class="header-buttons float_right">
+                <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
+                <input type="submit" id="searchButton" value="Search" onClick="search()">
+            </div>
+            <div class="header-buttons float_right">
+                <form action="stock_list.html">
+                    <input type="submit" id="listButton" value="View Market List">
+                </form>
+            </div>            
+        </section>
+            
+        <section id="main-content"> 
+            <div id="left_column">
+                <div class="float_right">
+                    <input type="text" id="compareBox" placeholder="Compare With Ticker" name="searchBox">
+                    <input type="submit" id="compareButton" value="Compare" onClick="addCompareTicker()">
+                </div>
+                <div id="compared_tickers" class="float_right"></div>
+                <h2 id="ticker_title">Loading...</h2>
+                <div id="stock_chart_div"></div>
+            </div>
         </section>
     </body>
 </html>

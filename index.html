@@ -28,23 +28,22 @@
         
         <section id="top-panel">
             <a href="index.html"><img src="logo.png"></a>
-            <div id="sBox">
+            <div class="header-buttons float_right">
                 <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
-                <input type="submit" id="searchButton" value="Search" onClick="search()">
+                <input type="submit" id="searchButton" class="submit_btn" value="Search" onClick="search()">
             </div>
-            <div id="list">
+            <div class="header-buttons float_right">
                 <form action="stock_list.html">
-                    <input type="submit" id="listButton" value="View Market List">
+                    <input type="submit" id="listButton" class="submit_btn" value="View Market List">
                 </form>
             </div>            
         </section>
         
         <section id="main-content">
                 
-            
             <div id="filter_div">
-                <div id="filter_table" class="table_container">
-                <div class="table_row">
+                <div id="filter_table_container">
+                <div id="filter_table_row">
                     
                     <div id="filter_table_main" class="table_cell">
                         <h2 id="filter_title">Filters</h2>
@@ -142,7 +141,7 @@
                 
             </div> <!-- // filter_div -->
         
-            <div id="main_div"><div id="chart_div"><h2>Loading...</h2></div></div>
+            <div id="index_main_div"><div id="index_chart_div"><h2>Loading...</h2></div></div>
             
         </section>
     </body>
