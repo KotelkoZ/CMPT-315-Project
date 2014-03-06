@@ -85,12 +85,19 @@ public class QuandlQuery {
             
             JSONObject jsonObject = (JSONObject) obj;
             
+            String name = (String) jsonObject.get("name");
+                        
+            String[] parts = name.split("\\(");
+            name = parts[0];
+            name = name.substring(0, name.length() - 1);
+            
             JSONArray data = (JSONArray) jsonObject.get("data");
             Iterator<JSONArray> iterator = data.iterator();
             data = iterator.next();
             
             JSONArray company = new JSONArray();
             company.add(ticker);
+            company.add(name);
             company.add(data);
             
             addToJSON(company, ticker);
