@@ -21,16 +21,8 @@
             });  
             
             function makeChart() {
-                var index = 0;
                 
-                //if (Object.keys(companies).length > 1) {
-                    drawChart()
-                //} else {
-                    console.log('a');
-                    //google.setOnLoadCallback(drawChart);
-               // }
-                
-                function drawChart() {
+                //function drawChart() {
                     console.log('b');
                     var data = new google.visualization.DataTable();
                     
@@ -82,7 +74,7 @@
                     
                     var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('stock_chart_div'));
                     chart.draw(data, options);
-                }
+               // }
 
             }
             

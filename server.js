@@ -21,9 +21,11 @@ var server = http.Server(function(req, res) {
             }
         } else {
             // file exists
+            console.log(path);
             switch (url.pathname) {
                 case '/':
                     // root. serve up _html/index.html
+                    res.setHeader('Content-Length', stat.size);
                     var stream = fs.createReadStream(path + '_html/index.html');
                     stream.pipe(res);
                     stream.on('error', function(err) {
