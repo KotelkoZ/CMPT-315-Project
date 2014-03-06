@@ -49,7 +49,7 @@ public class QuandlQuery {
             String ticker = parts[1];
             System.out.println(ticker);
             
-            if(i < 10) {
+            if(i < 100) {
                 
                 try {
                     String url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + ticker + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
