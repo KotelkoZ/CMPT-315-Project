@@ -1,9 +1,12 @@
+// Have to load at beginning. If called after page loads, wipes out HTML
+google.load("visualization", "1", {packages:["corechart"]});
+
 $(document).ready(function() {
                 
    // $('div#range_div').hide();
     $('div#filter_table_ranges').hide();
                 
-    // Set the range panel to open when h3#open_ranges clicked
+    // Set the range panel to open/close when h3#open_ranges clicked
     $('h3#open_ranges').click(function() {
         if ($('div#filter_table_ranges').attr('class') == 'open') {
             $('div#filter_table_ranges').removeClass("open")
@@ -23,7 +26,7 @@ $(document).ready(function() {
     .css('cursor', 'pointer');
                 
     // Set the curser to a pointer when hovering h3#filter_btn
-    $('h3#filter_btn').click(function() { makeChart(companyObject); })
+    $('h3#filter_btn').click(function() { makeChart(); })
     .css('cursor', 'pointer');
                 
     // Values for the range sliders.
@@ -50,23 +53,33 @@ $(document).ready(function() {
             onstatechange: function() { makeChart(companyObject); }
         });
     });
+    
+    
+    // Grab the quandl data
+    $.getJSON('./QuandlQuery/alltickers.json', function(file) {
+        companyObject = file;
+        
+        var XSelect = document.getElementById('XSelect');
+        var YSelect = document.getElementById('YSelect');
+        var bubbleSize = "Trading Volume";
+        for (var i = 1; i < file.column_names.length; i++) {
+            XSelect.innerHTML += '<option>' + file.column_names[i] + '</option>';
+            YSelect.innerHTML += '<option>' + file.column_names[i] + '</option>';
+            if (file.column_names[i] === bubbleSize) {
+                sizeIndex = i;
+            }
+        }
+        XSelect.value = "Dividend Yield";
+        YSelect.value = "Invested Capital";
+        
+        makeChart();
+    });
 }); // End JQuery
 
-
-// Have to load at beginning. If called after page loads, wipes out HTML
-google.load("visualization", "1", {packages:["corechart"]});
-            
 var companyObject;
 var dataTable;
+var sizeIndex;
 
-function done() {
-    // Get the data from yahoo
-    $.getJSON('http://query.yahooapis.com/v1/public/yql?q=select%20Symbol%2CBookValue%2CYearLow%2CYearHigh%2CChangeFromYearLow%2CChangeFromYearHigh%2CName%2COpen%2CPreviousClose%2CChangeinPercent%2CPERatio%2CVolume%2CDividendYield%2CStockExchange%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22SRCE%22%2C%22MMM%22%2C%22ABM%22%2C%22AFL%22%2C%22APD%22%2C%22MO%22%2C%22AWR%22%2C%22ADM%22%2C%22T%22%2C%22ATO%22%2C%22ADP%22%2C%22BDX%22%2C%22BMS%22%2C%22BKH%22%2C%22BRC%22%2C%22BF-B%22%2C%22BCR%22%2C%22CWT%22%2C%22CSL%22%2C%22CVX%22%2C%22CB%22%2C%22CINF%22%2C%22CTAS%22%2C%22CLC%22%2C%22CLX%22%2C%22KO%22%2C%22CL%22%2C%22CBSH%22%2C%22CTBI%22%2C%22CSVI%22%2C%22CTWS%22%2C%22ED%22%2C%22DBD%22%2C%22DCI%22%2C%22DOV%22%2C%22EFSI%22%2C%22EV%22%2C%22EMR%22%2C%22EGN%22%2C%22XOM%22%2C%22FDO%22%2C%22FRT%22%2C%22BEN%22%2C%22GPC%22%2C%22GRC%22%2C%22FUL%22%2C%22HCP%22%2C%22HP%22%2C%22HRL%22%2C%22ITW%22%2C%22JNJ%22%2C%22KMB%22%2C%22LANC%22%2C%22LEG%22%2C%22LOW%22%2C%22MKC%22%2C%22MCD%22%2C%22MHFI%22%2C%22MDT%22%2C%22MCY%22%2C%22MGEE%22%2C%22MSEX%22%2C%22MSA%22%2C%22NC%22%2C%22NFG%22%2C%22NDSN%22%2C%22NWN%22%2C%22NUE%22%2C%22ORI%22%2C%22PH%22%2C%22PNR%22%2C%22PEP%22%2C%22PNY%22%2C%22PPG%22%2C%22PG%22%2C%22STR%22%2C%22RAVN%22%2C%22RLI%22%2C%22RPM%22%2C%22SHW%22%2C%22SIAL%22%2C%22SJW%22%2C%22SON%22%2C%22SWK%22%2C%22SCL%22%2C%22SYY%22%2C%22TROW%22%2C%22TGT%22%2C%22TDS%22%2C%22TNC%22%2C%22TMP%22%2C%22TR%22%2C%22UGI%22%2C%22UBSI%22%2C%22UVV%22%2C%22UHT%22%2C%22VAL%22%2C%22VVC%22%2C%22VFC%22%2C%22GWW%22%2C%22WAG%22%2C%22WMT%22%2C%22WEYS%22%2C%22WGL%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=', 
-            function(file) {
-        companyObject = file.query.results.quote;
-        makeChart(companyObject);
-    });
-}
             
 function removeZero(val) {
     // Remove unnecesary decimal zero after decimal.
@@ -102,34 +115,35 @@ function satisfyFilters(c) {
 function makeChart() {
     if (companyObject === undefined) return;
                 
-    var e = document.getElementById('XSelect');
-    var xValue = e.options[e.selectedIndex];
-    e = document.getElementById('YSelect');
-    var yValue = e.options[e.selectedIndex];
-    e = document.getElementById('BSelect');
-    var bValue = e.options[e.selectedIndex];
-    var chartArray = [['ID', xValue.text, yValue.text, 'Company Name', bValue.text]];
+    var XIndex = document.getElementById('XSelect').selectedIndex;
+    var YIndex = document.getElementById('YSelect').selectedIndex;
+    var col_names = companyObject.column_names;
+    var chartArray = [['ID', col_names[XIndex + 1], col_names[YIndex + 1], 'Company Name', 'Trading Volume']];
     var exchangeMap = {};
-                
-    companyObject.forEach(function(c) {
-        // For each company, check if they satisfy the filters. 
-        if (satisfyFilters(c)) {
-            chartArray.push([c.Symbol, parseFloat(c[xValue.value]), parseFloat(c[yValue.value]),c.Name, Math.abs(parseFloat(c[bValue.value]))]);
-            exchangeMap[c.Symbol] = c.StockExchange;
-        }
-    });
     
-                
-    // minus one because of title entry in the chartArray.
+    for (var cName in companyObject) {
+        if (cName !== "column_names") {
+            chartArray.push([
+                cName, 
+                companyObject[cName][2][XIndex + 1],
+                companyObject[cName][2][YIndex + 1],
+                companyObject[cName][1],
+                companyObject[cName][2][sizeIndex + 1]
+            ]);
+        }
+    }
+    
+    // chart Array will be less than 2 if not tickers satisfy the filters. Don't draw chart.
+    if (chartArray.length < 2) return;
+    // Set the number of tickers in the chart.
     document.getElementById('filter_title').innerHTML = 'Filters - ' + (chartArray.length - 1);
                 
-    if (chartArray.length < 2) return;
     dataTable = google.visualization.arrayToDataTable(chartArray);
     var options = {
         // Options for the chart. Info at
         // https://google-developers.appspot.com/chart/interactive/docs/gallery/bubblechart
-        hAxis: {title: xValue.text, gridlines: {color: 'none'}},
-        vAxis: {title: yValue.text, gridlines: {color: 'none'}},
+        hAxis: {title: col_names[XIndex + 1], gridlines: {color: 'none'}},
+        vAxis: {title: col_names[YIndex + 1], gridlines: {color: 'none'}},
         bubble: {textStyle: {color: 'none'}},
         legend: {position: 'none'},
         chartArea: {left: 50, top: 0, width:"100%", height:"90%"},

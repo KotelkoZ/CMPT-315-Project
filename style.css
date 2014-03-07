@@ -108,6 +108,10 @@ div#filter_div {
     margin-right: 10px;
 }
 
+.cboBox {
+    max-width: 165px;
+}
+
 div#filter_table_container {
     padding-top: -10px;
     display: table;
