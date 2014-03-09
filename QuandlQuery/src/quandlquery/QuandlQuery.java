@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -49,7 +50,10 @@ public class QuandlQuery {
             String ticker = parts[1];
             System.out.println(ticker);
             
-            if(i < 100) {
+            if(i <= 200) {
+                if(i == 0) {
+                    createJSON(ticker);
+                }
                 
                 try {
                     String url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + ticker + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
@@ -57,15 +61,11 @@ public class QuandlQuery {
                     ReadableByteChannel rbc = Channels.newChannel(website.openStream());
                     FileOutputStream fos = new FileOutputStream("tickers/" + ticker + ".json");
                     fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                    
+                    readJSON(ticker);
                 } catch(FileNotFoundException e) {
-                    System.out.println("^There was an exception! The url doesn't exist");
+                    System.out.println("Error on ticker " + ticker);
                 }
-                
-                if(i == 0) {
-                    createJSON(ticker);
-                }
-                
-                readJSON(ticker);
                 
             }
             i++;
@@ -93,14 +93,24 @@ public class QuandlQuery {
             
             JSONArray data = (JSONArray) jsonObject.get("data");
             Iterator<JSONArray> iterator = data.iterator();
-            data = iterator.next();
+            try {
+                data = iterator.next();
+                JSONArray company = new JSONArray();
+                company.add(ticker);
+                company.add(name);
+                company.add(data);
             
-            JSONArray company = new JSONArray();
-            company.add(ticker);
-            company.add(name);
-            company.add(data);
+                addToJSON(company, ticker);
+            } catch (NoSuchElementException e) {
+                System.out.println("Error on ticker " + ticker);
+            }
             
-            addToJSON(company, ticker);
+            //JSONArray company = new JSONArray();
+            //company.add(ticker);
+            //company.add(name);
+            //company.add(data);
+            
+            //addToJSON(company, ticker);
             
         } catch(FileNotFoundException e) {
                     System.out.println("^There was an exception! The url doesn't exist");
