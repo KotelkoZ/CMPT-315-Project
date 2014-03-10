@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Stock 315</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" media="all" />
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-        
-        <script>
+
             var companies = {};
             
             google.load('visualization', '1', {'packages':['annotatedtimeline']});
             google.setOnLoadCallback();
             
             $(document).ready(function() {
-                getData(window.location.search.substring(1), function(column_names) {
+                var i = document.URL.indexOf('/stock/');
+                getData(document.URL.slice(i + 7), function(column_names) {
                     // Put the column_names into the combo box.
                     var combo = document.getElementById('combo');
                     for (var i = 1; i < column_names.length; i++) {
@@ -39,8 +30,7 @@
                 var oldestYear = new Date(oldestDate).getFullYear();
                     
                 var rows = [];
-                //var selectedIndex = document.getElementById('combo').selectedIndex;
-                //console.log(document.getElementById('combo').value);
+                
                 var mainTicker = document.getElementById('ticker_title').value;
                 for (var i = 2014; i >= oldestYear; i--) {
                     // Starting at the current year, go backwards through time. For each year, loop through the companies map, 
@@ -94,7 +84,7 @@
                 if (path == "")
                     return;
                 
-                var url = "/QuandlQuery/tickers/" + path + ".json";
+                var url = "../QuandlQuery/tickers/" + path + ".json";
                 
                 $.getJSON(url, function(company) {
                     if (company.error === undefined) {
@@ -127,41 +117,5 @@
             function search(term) {
                 term = term || document.getElementById('searchBox').value;
                 if (term)
-                    window.location.href = "stock.html?" + term;
+                    window.location.href = "stock/" + term;
             }
-        </script>
-        
-    </head>
-    <body>
-        
-        <section id="top-panel">
-            <a href="index.html"><img src="logo.png"></a>
-            <div class="header-buttons float_right">
-                <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
-                <input type="submit" id="searchButton" value="Search" onClick="search()">
-            </div>
-            <div class="header-buttons float_right">
-                <form action="stock_list.html">
-                    <input type="submit" id="listButton" value="View Market List">
-                </form>
-            </div>            
-        </section>
-            
-        <section id="main-content"> 
-            <div id="left_column">
-                <div class="float_right">
-                    <input type="text" id="compareBox" placeholder="Compare With Ticker" name="searchBox">
-                    <input type="submit" id="compareButton" value="Compare" onClick="addCompareTicker()">
-                </div>
-                
-                
-                <h2 id="ticker_title">Loading...</h2>
-                <div id="compared_tickers" class="float_right">tickerlist</div>
-                <select id='combo'>
-                </select>
-                <input type="submit" id="updateButton" value="Update Graph" onClick="makeChart()">
-                <div id="stock_chart_div"></div>
-            </div>
-        </section>
-    </body>
-</html>

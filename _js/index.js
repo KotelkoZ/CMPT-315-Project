@@ -173,5 +173,5 @@ function makeList() {
 function search(term) {
     term = term || document.getElementById('searchBox').value;
     if (term)
-        window.location.href = "stock.html?" + term;
+        window.location.href = "stock/" + term;
 }

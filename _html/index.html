@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <title>315 Project</title>
         <!-- our css -->
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="_css/style.css">
         <!-- css from google chart -->
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" media="all" />
         <!-- css for sliders -->
-        <link rel="stylesheet" href="../_js/slider/css/jslider.css" type="text/css">
+        <link rel="stylesheet" href="_js/slider/css/jslider.css" type="text/css">
         
         <!-- jquery and jquery ui -->
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -16,35 +16,32 @@
         <!-- Google charts script -->
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <!-- Sliders scripts -->
-        <script type="text/javascript" src="../_js/slider/js/tmpl.js"></script>
-        <script type="text/javascript" src="../_js/slider/js/jquery.dependClass-0.1.js"></script>
-        <script type="text/javascript" src="../_js/slider/js/draggable-0.1.js"></script>
-	    <script type="text/javascript" src="../_js/slider/js/jquery.slider.js"></script>
+        <script type="text/javascript" src="_js/slider/js/tmpl.js"></script>
+        <script type="text/javascript" src="_js/slider/js/jquery.dependClass-0.1.js"></script>
+        <script type="text/javascript" src="_js/slider/js/draggable-0.1.js"></script>
+	    <script type="text/javascript" src="_js/slider/js/jquery.slider.js"></script>
         <!-- our script -->
-        <script type="text/javascript" src="../_js/index.js"></script>
+        <script type="text/javascript" src="_js/index.js"></script>
     </head>
 
-    <body onload="done()">
+    <body>
         
         <section id="top-panel">
-            <a href="index.html"><img src="logo.png"></a>
-            <div id="sBox">
+            <a href="/"><img src="_image/logo.png"></a>
+            <div class="header-buttons float_right">
                 <input type="text" id="searchBox" placeholder="Search For A Ticker" name="searchBox">
-                <input type="submit" id="searchButton" value="Search" onClick="search()">
+                <input type="submit" id="searchButton" class="submit_btn" value="Search" onClick="search()">
             </div>
-            <div id="list">
-                <form action="stock_list.html">
-                    <input type="submit" id="listButton" value="View Market List">
-                </form>
+            <div class="header-buttons float_right">
+                <a href="/stock"><input type="submit" id="listButton" class="submit_btn" value="View Market List"></a>
             </div>            
         </section>
         
         <section id="main-content">
                 
-            
             <div id="filter_div">
-                <div id="filter_table" class="table_container">
-                <div class="table_row">
+                <div id="filter_table_container">
+                <div id="filter_table_row">
                     
                     <div id="filter_table_main" class="table_cell">
                         <h2 id="filter_title">Filters</h2>
@@ -53,56 +50,12 @@
                             <input type="checkbox" id="NasdaqFilter" checked> NASDAQ
                         </p>
                 
-                        <p>X-Axis<br>
-                            <select id='XSelect'>
-                                <!-- X-Axis selection -->
-                                <option value="PERatio">PE Ratio</option>
-                                <option value="YearLow">Year Low</option>
-                                <option value="YearHigh">Year High</option>
-                                <option value="ChangeFromYearLow">Change From Year Low</option>
-                                <option value="ChangeFromYearHigh">Change From Year High</option>
-                                <option value="Open">Open</option>
-                                <option value="PreviousClose">Previous Close</option>
-                                <option value="ChangeinPercent">Percent Change</option>
-                                <option value="BookValue">BookValue</option>
-                                <option value="DividendYield">Dividend Yield</option>
-                            </select>
-                        </p>
-                        <p>Y-Axis<br>
-                            <select id='YSelect'>
-                                <!-- Y-Axis selection -->
-                                <option value="DividendYield">Dividend Yield</option>
-                                <option value="YearLow">Year Low</option>
-                                <option value="YearHigh">Year High</option>
-                                <option value="ChangeFromYearLow">Change From Year Low</option>
-                                <option value="ChangeFromYearHigh">Change From Year High</option>
-                                <option value="Open">Open</option>
-                                <option value="PreviousClose">Previous Close</option>
-                                <option value="ChangeinPercent">Percent Change</option>
-                                <option value="PERatio">PE Ratio</option>
-                                <option value="BookValue">Book Value</option>
-                            </select>
-                        </p>
-                        <p>Bubble Size<br>
-                            <select id='BSelect'>
-                                <!-- Bubble size selection -->
-                                <option value="Volume">Volume</option>
-                                <option value="YearLow">Year Low</option>
-                                <option value="YearHigh">Year High</option>
-                                <option value="ChangeFromYearLow">Change From Year Low</option>
-                                <option value="ChangeFromYearHigh">Change From Year High</option>
-                                <option value="Open">Open</option>
-                                <option value="PreviousClose">Previous Close</option>
-                                <option value="PERatio">PE Ratio</option>
-                                <option value="BookValue">Book Value</option>
-                                <option value="DividendYield">Dividend Yield</option>
-                            </select>
-                        </p>
+                        <p>X-Axis<br><select id='XSelect' class='cboBox'></select></p>
+                        <p>Y-Axis<br><select id='YSelect' class='cboBox'></select></p>
                         
                         <h3 id="open_ranges" class="btn">Open Ranges >></h3>
                         <h3 id="filter_btn" class="btn">Filter</h3>
                     </div> <!-- // filter_table_main -->
-                    
                     
                     <div id="filter_table_ranges">
                         <p class="slider_label">P/E Ratio<br>
@@ -142,7 +95,7 @@
                 
             </div> <!-- // filter_div -->
         
-            <div id="main_div"><div id="chart_div"><h2>Loading...</h2></div></div>
+            <div id="index_main_div"><div id="index_chart_div"><h2>Loading...</h2></div></div>
             
         </section>
     </body>
