@@ -125,10 +125,10 @@ function makeChart() {
         if (cName !== "column_names") {
             chartArray.push([
                 cName, 
-                companyObject[cName][2][XIndex + 1],
-                companyObject[cName][2][YIndex + 1],
-                companyObject[cName][1],
-                companyObject[cName][2][sizeIndex + 1]
+                companyObject[cName]['data'][XIndex + 1],
+                companyObject[cName]['data'][YIndex + 1],
+                companyObject[cName]['name'],
+                companyObject[cName]['data'][sizeIndex + 1]
             ]);
         }
     }
