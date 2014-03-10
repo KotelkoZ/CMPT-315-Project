@@ -95,10 +95,13 @@ public class QuandlQuery {
             Iterator<JSONArray> iterator = data.iterator();
             try {
                 data = iterator.next();
-                JSONArray company = new JSONArray();
-                company.add(ticker);
-                company.add(name);
-                company.add(data);
+                
+                JSONObject company = new JSONObject();
+                
+                
+                company.put("ticker", ticker);
+                company.put("name", name);
+                company.put("data", data);
             
                 addToJSON(company, ticker);
             } catch (NoSuchElementException e) {
@@ -150,7 +153,7 @@ public class QuandlQuery {
         
     }
     
-    public void addToJSON(JSONArray company, String ticker) throws IOException, ParseException {
+    public void addToJSON(JSONObject company, String ticker) throws IOException, ParseException {
         
         JSONObject json = new JSONObject();
         JSONParser parser = new JSONParser();

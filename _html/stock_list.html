@@ -5,6 +5,28 @@
         <title>315 Project</title>
         <link rel="stylesheet" type="text/css" href="../_css/style.css">
         <script type="text/javascript" src="_js/index.js"></script>
+        
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" media="all" />
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+        
+        <script>
+            
+        $(document).ready(function() {
+                                
+            var url = "../QuandlQuery/alltickers.json";
+                
+            $.getJSON(url, function(data) {
+                $('#stock-list').append("<ul>");
+                $.each(data, function(i, data) {
+                    console.log(data.name);
+                    $('#stock-list').append("<li>" + data.name + "</li>");
+                });
+                $('#stock-list').append("</ul>");   
+            });
+        });            
+        
+        </script>
     </head>
     
     <body>
@@ -20,7 +42,7 @@
         </section>
         
         <section id="list-panel">
-        
+            <div id="stock-list"></div>
         </section>
     </body>
     
