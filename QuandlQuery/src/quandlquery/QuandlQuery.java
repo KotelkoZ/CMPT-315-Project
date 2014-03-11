@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -23,6 +24,8 @@ import org.json.simple.parser.JSONParser;
  */
 public class QuandlQuery {
 
+    ArrayList dataList = new ArrayList();
+    
     /**
      * @param args the command line arguments
      */
@@ -50,10 +53,8 @@ public class QuandlQuery {
             String ticker = parts[1];
             System.out.println(ticker);
             
-            if(i <= 200) {
-                if(i == 0) {
-                    createJSON(ticker);
-                }
+            if(i <= 50) {
+                
                 
                 try {
                     String url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + ticker + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
@@ -65,6 +66,10 @@ public class QuandlQuery {
                     readJSON(ticker);
                 } catch(FileNotFoundException e) {
                     System.out.println("Error on ticker " + ticker);
+                }
+                
+                if(i == 0) {
+                    createJSON(ticker);
                 }
                 
             }
@@ -91,11 +96,32 @@ public class QuandlQuery {
             name = parts[0];
             name = name.substring(0, name.length() - 1);
             
+            JSONArray columns = (JSONArray) jsonObject.get("column_names");
+            System.out.println(columns.size());
             JSONArray data = (JSONArray) jsonObject.get("data");
+            
             Iterator<JSONArray> iterator = data.iterator();
             try {
                 data = iterator.next();
+                System.out.println(data.size());
                 
+                int x = 0;
+                
+                    for(int i = 0; i < dataList.size(); i++) {
+                        if(x < columns.size()) {
+                            if(columns.get(x).equals(dataList.get(i))) {
+                                x++;
+                            }
+                            else {
+                                data.add(i, null);
+                            }                            
+                        }
+                        else {
+                            data.add(i, null);
+                        }
+                }
+                
+                System.out.println(data.size());
                 JSONObject company = new JSONObject();
                 
                 
@@ -132,9 +158,9 @@ public class QuandlQuery {
             
             JSONObject jsonObject = (JSONObject) obj;
 
-            JSONArray columns = (JSONArray) jsonObject.get("column_names");
+            dataList = (JSONArray) jsonObject.get("column_names");
             
-            json.put("column_names", columns);
+            json.put("column_names", dataList);
             
         } catch(FileNotFoundException e) {
                     System.out.println("^There was an exception! The url doesn't exist");
@@ -150,6 +176,8 @@ public class QuandlQuery {
         } catch(IOException e) {
             e.printStackTrace();
         }
+        
+        
         
     }
     

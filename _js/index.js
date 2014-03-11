@@ -61,13 +61,14 @@ $(document).ready(function() {
         
         var XSelect = document.getElementById('XSelect');
         var YSelect = document.getElementById('YSelect');
-        var bubbleSize = "Trading Volume";
+        bubbleSize = "Trading Volume";
+        
         for (var i = 1; i < file.column_names.length; i++) {
             XSelect.innerHTML += '<option>' + file.column_names[i] + '</option>';
             YSelect.innerHTML += '<option>' + file.column_names[i] + '</option>';
-            if (file.column_names[i] === bubbleSize) {
+            /*if (file.column_names[i] === bubbleSize) {
                 sizeIndex = i;
-            }
+            }*/
         }
         XSelect.value = "Dividend Yield";
         YSelect.value = "Invested Capital";
@@ -78,8 +79,8 @@ $(document).ready(function() {
 
 var companyObject;
 var dataTable;
-var sizeIndex;
-
+//var sizeIndex;
+var bubbleSize;
             
 function removeZero(val) {
     // Remove unnecesary decimal zero after decimal.
@@ -118,25 +119,44 @@ function makeChart() {
     var XIndex = document.getElementById('XSelect').selectedIndex;
     var YIndex = document.getElementById('YSelect').selectedIndex;
     var col_names = companyObject.column_names;
-    var chartArray = [['ID', col_names[XIndex + 1], col_names[YIndex + 1], 'Company Name', 'Trading Volume']];
+    var chartArray = [['ID', col_names[XIndex + 1], col_names[YIndex + 1], 'Company Name', bubbleSize]];
     var exchangeMap = {};
+    var numResults = 0;
     
     for (var cName in companyObject) {
         if (cName !== "column_names") {
+            var xVal = companyObject[cName]['data'][XIndex + 1];
+            var yVal = companyObject[cName]['data'][YIndex + 1];
+            var sizeIndex = companyObject['column_names'].indexOf(bubbleSize);
+            var bVal = companyObject[cName]['data'][sizeIndex + 1];
+            
+            if (xVal !== null && yVal !== null && bVal !== 0 && bVal !== null) {
+                numResults++;
+                
+                chartArray.push([
+                    cName, 
+                    xVal,
+                    yVal,
+                    companyObject[cName]['name'],
+                    bVal
+                ]);
+            } 
+            
+            /*
             chartArray.push([
                 cName, 
                 companyObject[cName]['data'][XIndex + 1],
                 companyObject[cName]['data'][YIndex + 1],
                 companyObject[cName]['name'],
                 companyObject[cName]['data'][sizeIndex + 1]
-            ]);
+            ]);*/
         }
     }
     
     // chart Array will be less than 2 if not tickers satisfy the filters. Don't draw chart.
     if (chartArray.length < 2) return;
     // Set the number of tickers in the chart.
-    document.getElementById('filter_title').innerHTML = 'Filters - ' + (chartArray.length - 1);
+    document.getElementById('filter_title').innerHTML = 'Filters - ' + numResults;
                 
     dataTable = google.visualization.arrayToDataTable(chartArray);
     var options = {
