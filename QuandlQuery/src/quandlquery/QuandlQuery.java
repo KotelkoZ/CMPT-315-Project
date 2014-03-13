@@ -50,7 +50,7 @@ public class QuandlQuery {
             String[] code = line.split(cvsSplitBy);            
             
             String[] parts = code[1].split("_");
-            String ticker = parts[1];
+            String ticker = code[0];
             String tickerCode;
             if(parts.length == 3) {
                 tickerCode = parts[1] + "_" + parts[2];
@@ -61,9 +61,8 @@ public class QuandlQuery {
             
             String exchange = code[4];
             System.out.println(ticker);
-            System.out.println(exchange);
             
-            if(i <= 10) {                
+            if(i <= 1000) {                
                 
                 try {
                     File f = new File("tickers/" + tickerCode + ".json");
@@ -142,7 +141,7 @@ public class QuandlQuery {
                 company.put("exchange", exchange);
                 company.put("data", data);
             
-                addToJSON(company, ticker);
+                addToJSON(company, ticker, tickerCode);
             } catch (NoSuchElementException e) {
                 System.err.println("Error on ticker " + ticker);
             }
@@ -194,7 +193,7 @@ public class QuandlQuery {
         
     }
     
-    public void addToJSON(JSONObject company, String ticker) throws IOException, ParseException {
+    public void addToJSON(JSONObject company, String ticker, String tickerCode) throws IOException, ParseException {
         
         JSONObject json = new JSONObject();
         JSONParser parser = new JSONParser();
@@ -205,7 +204,7 @@ public class QuandlQuery {
             
             json = (JSONObject) obj;
             
-            json.put(ticker, company);
+            json.put(tickerCode, company);
             
         } catch(FileNotFoundException e) {
                     System.out.println("^There was an exception! The url doesn't exist");
