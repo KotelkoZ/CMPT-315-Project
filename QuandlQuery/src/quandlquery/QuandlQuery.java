@@ -1,6 +1,7 @@
 package quandlquery;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -29,12 +30,12 @@ public class QuandlQuery {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException, InterruptedException {
         QuandlQuery obj = new QuandlQuery();
         obj.run();        
     }
     
-    public void run() throws FileNotFoundException, IOException, ParseException {
+    public void run() throws FileNotFoundException, IOException, ParseException, InterruptedException {
         
         
         String csvFile = "stockinfo.csv";
@@ -46,31 +47,45 @@ public class QuandlQuery {
         int i = 0;
         while ((line = br.readLine()) != null) {
             
-            String[] code = line.split(cvsSplitBy);
-            
+            String[] code = line.split(cvsSplitBy);            
             
             String[] parts = code[1].split("_");
             String ticker = parts[1];
-            System.out.println(ticker);
+            String tickerCode;
+            if(parts.length == 3) {
+                tickerCode = parts[1] + "_" + parts[2];
+            }
+            else {
+                tickerCode = parts[1];
+            }
             
-            if(i <= 50) {
-                
+            String exchange = code[4];
+            System.out.println(ticker);
+            System.out.println(exchange);
+            
+            if(i <= 10) {                
                 
                 try {
-                    String url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + ticker + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
-                    URL website = new URL(url);
-                    ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-                    FileOutputStream fos = new FileOutputStream("tickers/" + ticker + ".json");
-                    fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                    File f = new File("tickers/" + tickerCode + ".json");
+                    if(!f.exists()) {
+                        System.out.println("Downloading ticker: " + ticker);
+                        String url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + tickerCode + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+                        URL website = new URL(url);
+                        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+                        FileOutputStream fos = new FileOutputStream("tickers/" + tickerCode + ".json");
+                        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                    }
                     
-                    readJSON(ticker);
                 } catch(FileNotFoundException e) {
-                    System.out.println("Error on ticker " + ticker);
+                    System.err.println("Error downloading ticker " + ticker);
                 }
                 
                 if(i == 0) {
                     createJSON(ticker);
                 }
+                
+                Thread.sleep(10);
+                readJSON(tickerCode, ticker, exchange);
                 
             }
             i++;
@@ -80,13 +95,13 @@ public class QuandlQuery {
         
     }
     
-    public void readJSON(String ticker) throws IOException, ParseException {
+    public void readJSON(String tickerCode, String ticker, String exchange) throws IOException, ParseException {
         
         JSONParser parser = new JSONParser();
         
         try {
             
-            Object obj = parser.parse(new FileReader("tickers/" + ticker + ".json"));
+            Object obj = parser.parse(new FileReader("tickers/" + tickerCode + ".json"));
             
             JSONObject jsonObject = (JSONObject) obj;
             
@@ -97,13 +112,11 @@ public class QuandlQuery {
             name = name.substring(0, name.length() - 1);
             
             JSONArray columns = (JSONArray) jsonObject.get("column_names");
-            System.out.println(columns.size());
             JSONArray data = (JSONArray) jsonObject.get("data");
             
             Iterator<JSONArray> iterator = data.iterator();
             try {
                 data = iterator.next();
-                System.out.println(data.size());
                 
                 int x = 0;
                 
@@ -121,17 +134,17 @@ public class QuandlQuery {
                         }
                 }
                 
-                System.out.println(data.size());
                 JSONObject company = new JSONObject();
                 
                 
                 company.put("ticker", ticker);
                 company.put("name", name);
+                company.put("exchange", exchange);
                 company.put("data", data);
             
                 addToJSON(company, ticker);
             } catch (NoSuchElementException e) {
-                System.out.println("Error on ticker " + ticker);
+                System.err.println("Error on ticker " + ticker);
             }
             
             //JSONArray company = new JSONArray();
@@ -142,19 +155,19 @@ public class QuandlQuery {
             //addToJSON(company, ticker);
             
         } catch(FileNotFoundException e) {
-                    System.out.println("^There was an exception! The url doesn't exist");
+                    System.err.println("^Can't access that ticker file");
                 }
         
     }
     
-    public void createJSON(String ticker) throws FileNotFoundException, IOException, ParseException {
+    public void createJSON(String tickerCode) throws FileNotFoundException, IOException, ParseException {
         
         JSONObject json = new JSONObject();
         JSONParser parser = new JSONParser();
         
         try {
             
-            Object obj = parser.parse(new FileReader("tickers/" + ticker + ".json"));
+            Object obj = parser.parse(new FileReader("tickers/" + tickerCode + ".json"));
             
             JSONObject jsonObject = (JSONObject) obj;
 
