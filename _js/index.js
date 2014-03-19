@@ -61,17 +61,20 @@ $(document).ready(function() {
         
         var XSelect = document.getElementById('XSelect');
         var YSelect = document.getElementById('YSelect');
-        bubbleSize = "Trading Volume";
+        var BSelect = document.getElementById('BSelect');
+        //bubbleSize = "Trading Volume";
         
         for (var i = 1; i < file.column_names.length; i++) {
             XSelect.innerHTML += '<option>' + file.column_names[i] + '</option>';
             YSelect.innerHTML += '<option>' + file.column_names[i] + '</option>';
+            BSelect.innerHTML += '<option>' + file.column_names[i] + '</option>';
             /*if (file.column_names[i] === bubbleSize) {
                 sizeIndex = i;
             }*/
         }
-        XSelect.value = "Dividend Yield";
-        YSelect.value = "Invested Capital";
+        XSelect.value = "Hi-Lo Risk";
+        YSelect.value = "Value Line Beta";
+        BSelect.value = "Current PE Ratio";
         
         makeChart();
     });
@@ -80,7 +83,7 @@ $(document).ready(function() {
 var companyObject;
 var dataTable;
 //var sizeIndex;
-var bubbleSize;
+//var bubbleSize;
             
 function removeZero(val) {
     // Remove unnecesary decimal zero after decimal.
@@ -94,12 +97,34 @@ function within(value, pt) {
             
 function satisfyFilters(c) {
     // Exchange check boxes
-    if ((c.StockExchange == 'NYSE' && !(document.getElementById('NYSEFilter').checked)) || 
-            (c.StockExchange === 'NasdaqNM' && !(document.getElementById('NasdaqFilter').checked)))
-        return false;
+    //if ((c.StockExchange == 'NYSE' && !(document.getElementById('NYSEFilter').checked)) || 
+    //        (c.StockExchange === 'NasdaqNM' && !(document.getElementById('NasdaqFilter').checked)))
+    //    return false;
+    
+    var exchange = companyObject[c].exchange;
+    switch (exchange) {
+        case 'NYSE':
+            if (!(document.getElementById('NYSEFilter').checked))
+                return false;
+            break;
+        case 'NASDAQ':
+            if (!(document.getElementById('NASDAQFilter').checked))
+                return false;
+            break;
+        case 'TSX':
+            if (!(document.getElementById('TSXFilter').checked))
+                return false;
+            break;
+        case 'AMEX':
+            if (!(document.getElementById('AMEXFilter').checked))
+                return false;
+            break;
+    }
+    
+    return true;
                 
     // PERatio slider
-    if (!within($("#PERatioSlider").attr('value'), c.PERatio)) return false;
+    /*if (!within($("#PERatioSlider").attr('value'), c.PERatio)) return false;
     if (!within($("#YearLowSlider").attr('value'), c.YearLow)) return false;
     if (!within($("#YearHighSlider").attr('value'), c.YearHigh)) return false;
     if (!within($("#YearLowChangeSlider").attr('value'), c.ChangeFromYearLow)) return false;
@@ -108,7 +133,7 @@ function satisfyFilters(c) {
     if (!within($("#PrevCloseSlider").attr('value'), c.PreviousClose)) return false;
     if (!within($("#PercentChangeSlider").attr('value'), parseFloat(c.ChangeinPercent))) return false;
     if (!within($("#BookValueSlider").attr('value'), c.BookValue)) return false;
-    if (!within($("#DividendYieldSlider").attr('value'), c.DividendYield)) return false;
+    if (!within($("#DividendYieldSlider").attr('value'), c.DividendYield)) return false;*/
                 
     return true;
 }
@@ -118,17 +143,20 @@ function makeChart() {
                 
     var XIndex = document.getElementById('XSelect').selectedIndex;
     var YIndex = document.getElementById('YSelect').selectedIndex;
+    var BIndex = document.getElementById('BSelect').selectedIndex;
+    
     var col_names = companyObject.column_names;
-    var chartArray = [['ID', col_names[XIndex + 1], col_names[YIndex + 1], 'Company Name', bubbleSize]];
+    var chartArray = [['ID', col_names[XIndex + 1], col_names[YIndex + 1], 'Company Name', col_names[BIndex + 1]]];
     var exchangeMap = {};
     var numResults = 0;
     
     for (var cName in companyObject) {
-        if (cName !== "column_names") {
+        
+        if (cName !== "column_names" && satisfyFilters(cName)) {
             var xVal = companyObject[cName]['data'][XIndex + 1];
             var yVal = companyObject[cName]['data'][YIndex + 1];
-            var sizeIndex = companyObject['column_names'].indexOf(bubbleSize);
-            var bVal = companyObject[cName]['data'][sizeIndex + 1];
+            //var sizeIndex = companyObject['column_names'].indexOf(bubbleSize);
+            var bVal = companyObject[cName]['data'][BIndex + 1];
             
             if (xVal !== null && yVal !== null && bVal !== 0 && bVal !== null) {
                 numResults++;
@@ -182,11 +210,6 @@ function makeChart() {
         var symbol = dataTable.getValue(row, 0);
         search(symbol);
     }
-}
-
-function makeList() {
-    var file = JSON.parse("./QuandlQuery/tickers/AAPL.json");
-    console.log(file.name);
 }
 
 // Load the stock page with the specific stock as an argument.

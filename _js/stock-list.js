@@ -16,7 +16,6 @@ $(document).ready(function() {
 var companyObject;
 
 function makeTable() {
-    console.log(companyObject);
     var url = "../QuandlQuery/alltickers.json";
     var data = new google.visualization.DataTable();    
     
@@ -45,5 +44,13 @@ function makeTable() {
 
     var table = new google.visualization.Table(document.getElementById('table_div'));
     table.draw(data, {sortColumn: 0}, {sortAscending: true});
+    
+    google.visualization.events.addListener(table, 'select',
+        function(event) {
+            var index = table.getSelection()[0].row;
+            var ticker = data.Bd[index][1].Ue.replace('.', '_');
+            window.location.href = "stock/" + ticker;
+            //console.log(ticker);
+    });
     
 }
