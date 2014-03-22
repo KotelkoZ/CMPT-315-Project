@@ -30,19 +30,19 @@
         </section>
             
         <section id="main-content"> 
-            <div id="left_column">
-                <div class="float_right">
-                    <input type="text" id="compareBox" placeholder="Compare With Ticker" name="searchBox">
-                    <input type="submit" id="compareButton" value="Compare" onClick="addCompareTicker()">
-                </div>
-                
-                
-                <h2 id="ticker_title">Loading...</h2>
-                <div id="compared_tickers" class="float_right">tickerlist</div>
-                <select id='combo'></select>
-                <input type="submit" id="updateButton" value="Update Graph" onClick="makeChart()">
-                <div id="stock_chart_div"></div>
+            <div class="float_right">
+                <span id="error"></span>
+                <input type="text" id="compareBox" placeholder="Compare With Ticker" name="searchBox">
+                <input type="submit" id="compareButton" value="Compare" onClick="addCompareTicker()">
             </div>
+                
+            <h2 id="ticker_title">Loading...</h2>
+            <span id="instructions" class="float_right">Click on a company name in the table to remove it from comparison.</span>
+            <select id='combo'></select>
+            <input type="submit" id="updateButton" value="Update Graph" onClick="makeChart()">
+            
+            <div id="left_column"><div id="stock_chart_div"></div></div>
+            <div id="right_column"><div id="table_div"></div></div>
         </section>
     </body>
 </html>

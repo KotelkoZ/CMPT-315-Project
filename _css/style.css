@@ -1,8 +1,13 @@
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
     background-color: #DFE2DB;
     font-family:      Georgia, "Times New Roman", Times, serif;
     font-size:        small;
+    height: 100%;
 }
 
 h2 {
@@ -19,6 +24,7 @@ h2#filter_title {
 
 section#main-content {
     margin: 10px;
+    height: calc(100% - 120px);
 }
 
 div#filter_div, div#index_chart_div, input#compareBox, input#compareButton, input#listButton, input#searchBox, input#searchButton, h3#filter_btn, h3#open_ranges {
@@ -137,7 +143,7 @@ div#index_chart_div {
 }
 
 div#stock_chart_div {
-    height: 450px;
+    height: 100%;
     width: 100%; 
     margin-top: 8px;
 }
@@ -145,17 +151,37 @@ div#stock_chart_div {
 
 
 div#left_column {
-    width: calc(100% - 400px);
-    height: calc(100% - 200px);
-    min-width: 500px;
+    display: inline-block;
+    width: calc(100% - 463px);
+    height: calc(100% - 65px);
+}
+
+div#right_column {
+    display: inline-block;
+    vertical-align: top;
+    width: 450px;
+    height: calc(100% - 65px);
+    margin-left: 10px;
+    margin-top: 9px;
 }
 
 div#stock_main_div {
-    width: 100%;
+    width: 90%;
 }
 
+span#error {
+    color: #bc0808;
+}
 
+span#instructions {
+    line-height: 20px;
+    margin-top: 6px;
+    color: #080893;
+}
 
+tr.selected {
+    background-color: #d0ccff;
+}
 
 
 

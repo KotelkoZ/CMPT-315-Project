@@ -1,8 +1,10 @@
 
 var companies = {};
+var calledCompany;
             
 google.load('visualization', '1', {'packages':['annotatedtimeline']});
-google.setOnLoadCallback();
+google.load('visualization', '1', {packages:['table']});
+//google.setOnLoadCallback();
             
 $(document).ready(function() {
     var i = document.URL.indexOf('/stock/');
@@ -50,18 +52,89 @@ function makeChart() {
             }
             rowEntry.push(entry);
         }
-        rows.push(rowEntry);
+        if (!emptyRow(rowEntry)) {
+            // don't add a row if it's all null entries.
+            rows.push(rowEntry);
+        }
     }
     data.addRows(rows);
-                    
-    var options = {
+              
+    var height = $('#right_column').height();
+    var width = $('#right_column').width();
+    //var height = 300;
+    
+    var timelineoptions = {
         displayZoomButtons: false,
         fill: 4,
-        thickness: 2
+        thickness: 2,
+    }
+    var tableoptions = {
+        showRowNumber: false,
+        height: (height - 5).toString(),
+        width: width.toString(),
+        sort: 'event',
+        alternatingRowStyle: false
     }
                     
     var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('stock_chart_div'));
-    chart.draw(data, options);
+    chart.draw(data, timelineoptions);
+    
+    var table = new google.visualization.Table(document.getElementById('table_div'));
+    table.draw(data, tableoptions);
+    
+    google.visualization.events.addListener(chart, 'rangechange', makeSelections);
+    google.visualization.events.addListener(chart, 'ready', makeSelections);
+    
+    google.visualization.events.addListener(table, 'sort', function (evt) {
+        // Delete the ticker from the comparison when the company is clicked in the table
+        var column = evt.column;
+        var company = data['yf'][column]['label'];
+        
+        if (company === 'Date') {
+        } else if (company !== calledCompany) {
+            delete companies[company];
+            makeChart();
+        } else {
+            $('#error').text('Cannot remove ' + calledCompany + ' from comparison.');
+            setTimeout(function () {
+                $('#error').text('');
+            }, 3000);
+        }
+    });
+    
+    function makeSelections() {
+        var range = chart.getVisibleChartRange();
+        var start = Date.parse(range.start);
+        var end = Date.parse(range.end);
+        var a = [];
+        
+        for (var i = 0; i < data['xf'].length; i++) {
+            var date = Date.parse(data['xf'][i]['c'][0]['v']);
+            // have to add by two because child numbers start at 1. and since we dont want to select the head line,
+            // the first data row is row 2.
+            var rowInd = i + 2;
+            
+            $('tbody  tr:nth-child(' + rowInd + ')').removeClass('google-visualization-table-tr-even');
+            console.log(rowInd);
+            
+            if (date >= start && date <= end) {
+                $('tbody  tr:nth-child(' + rowInd + ')').addClass('selected');
+                //a.push({row: i, column: null});
+            } else {
+                $('tbody  tr:nth-child(' + rowInd + ')').removeClass('selected');
+            }
+        }
+        //table.setSelection(a);
+    }
+    
+    function emptyRow(row) {
+        for (var i = 1; i < row.length; i++) {
+            if (row[i] !== null) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
             
 function maxCompany(companies) {
@@ -87,31 +160,45 @@ function getData(path, callback) {
     var url = "../QuandlQuery/tickers/" + path + ".json";
                 
     $.getJSON(url, function(company) {
-        if (company.error === undefined) {
-            var name = company["name"].split(" - ")[0];
-            var column_names = company.column_names;
-            var data = company.data;
-            companies[name] = {"column_names":column_names, "data":data};
+        var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
+        var column_names = company.column_names;
+        var data = company.data;
+        companies[name] = {"column_names":column_names, "data":data};
                         
-            if (Object.keys(companies).length == 1) {
-                // Set the title to the name of the company that the page was called with.
-                document.getElementById('ticker_title').innerHTML = name;
-            }
-                        
-            // make the callback.
-            callback(company.column_names);
-        } else {
-            // no results for the query
+        if (Object.keys(companies).length == 1) {
+            // Set the title to the name of the company that the page was called with.
+            calledCompany = name;
+            document.getElementById('ticker_title').innerHTML = name;
         }
+                        
+        // make the callback.
+        callback(company.column_names);
+        
+    }).fail(function () {
+            // no results for the query
+            $('#error').text('Cannot find ticker ' + path + '.');
+            setTimeout(function () {
+                $('#error').text('');
+            }, 3000);
+        
     });
 }
             
 function addCompareTicker() {
-    var ticker = document.getElementById('compareBox').value;
-    if (ticker) {
-        getData(ticker, makeChart);
-        document.getElementById('compareBox').value = "";
+    if (Object.keys(companies).length < 3) {
+        var ticker = document.getElementById('compareBox').value;
+        if (ticker) {
+            getData(ticker, makeChart);
+            document.getElementById('compareBox').value = "";
+        }
+    } else {
+        // too many tickers already. We want the error message to be displayed for 3 sec, then removed.
+        $('#error').text('Please remove a ticker before adding another.');
+        setTimeout(function () {
+            $('#error').text('');
+        }, 3000);
     }
+    
 }
             
 function search(term) {
