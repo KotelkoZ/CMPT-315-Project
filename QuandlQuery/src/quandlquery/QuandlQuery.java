@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
@@ -24,201 +21,218 @@ import org.json.simple.parser.JSONParser;
  * @author Jordan Bodker
  */
 public class QuandlQuery {
-
-    ArrayList dataList = new ArrayList();
-    
-    /**
+/**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException, IOException, ParseException, InterruptedException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException, ParseException {
         QuandlQuery obj = new QuandlQuery();
-        obj.run();        
+        obj.run();
     }
     
-    public void run() throws FileNotFoundException, IOException, ParseException, InterruptedException {  
+    public void run() throws FileNotFoundException, IOException, InterruptedException, ParseException {
         
         String csvFile = "stockinfo.csv";
 	BufferedReader br = null;
 	String line = "";
 	String cvsSplitBy = ",";
         
+        //delete allticker.json if existing
+        File at = new File("alltickers.json");
+        if(at.exists()) {
+            delete(at);
+        }
+        
+        //delete tickers directory if exist
+        File dir = new File("tickers");
+        if(dir.exists()) {            
+            delete(dir);
+        }
+        
+        //now create it
+        dir.mkdir();
+        
+        
         br = new BufferedReader(new FileReader(csvFile));
-        int i = 0;
-        while ((line = br.readLine()) != null) {
+        br.readLine();
+        
+        boolean first = true;
+        
+        while((line = br.readLine()) != null) {
+                
+            JSONObject company = new JSONObject();               
+                              
+            String[] code = line.split(cvsSplitBy);
             
-            String[] code = line.split(cvsSplitBy);            
+            String tickerKey = code[0];
+            tickerKey = tickerKey.replace('.', '_');
+            tickerKey = tickerKey.replace('/', '_');
             
-            String[] parts = code[1].split("_");
             String ticker = code[0];
-            String tickerCode;
-            if(parts.length == 3) {
-                tickerCode = parts[1] + "_" + parts[2];
+            company.put("ticker", ticker);
+            
+            String stockName = code[1];
+            company.put("name", stockName);
+            
+            String priceCode;
+            if(code[2].contains("/")) {
+                priceCode = code[2];
             }
             else {
-                tickerCode = parts[1];
+                priceCode = null;
             }
+            company.put("price code", priceCode);
             
-            String exchange = code[4];
-            System.out.println(ticker);
-            
-            if(i <= 1000) {                
-                
-                try {
-                    File f = new File("tickers/" + tickerCode + ".json");
-                    if(!f.exists()) {
-                        System.out.println("Downloading ticker: " + ticker);
-                        String url = "http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + tickerCode + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
-                        URL website = new URL(url);
-                        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-                        FileOutputStream fos = new FileOutputStream("tickers/" + tickerCode + ".json");
-                        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-                    }
-                    
-                } catch(FileNotFoundException e) {
-                    System.err.println("Error downloading ticker " + ticker);
-                }
-                
-                if(i == 0) {
-                    createJSON(ticker);
-                }
-                
-                Thread.sleep(10);
-                readJSON(tickerCode, ticker, exchange);
-                
+            String exchange;
+            if(code[2].contains("/")) {
+                String[] parts = code[2].split("/");
+                exchange = parts[1];
+                parts = exchange.split("_");
+                exchange = parts[0];
             }
-            i++;
-        }
-        
-        
-        
-    }
-    
-    public void readJSON(String tickerCode, String ticker, String exchange) throws IOException, ParseException {
-        
-        JSONParser parser = new JSONParser();
-        
-        try {
+            else {
+                exchange = null;
+            }
+            company.put("exchange", exchange);
             
-            Object obj = parser.parse(new FileReader("tickers/" + tickerCode + ".json"));
+            //Start downloading a ticker file
             
-            JSONObject jsonObject = (JSONObject) obj;
-            
-            String name = (String) jsonObject.get("name");
-                        
-            String[] parts = name.split("\\(");
-            name = parts[0];
-            name = name.substring(0, name.length() - 1);
-            
-            JSONArray columns = (JSONArray) jsonObject.get("column_names");
-            JSONArray data = (JSONArray) jsonObject.get("data");
-            
-            Iterator<JSONArray> iterator = data.iterator();
             try {
-                data = iterator.next();
                 
-                int x = 0;
-                
-                    for(int i = 0; i < dataList.size(); i++) {
-                        if(x < columns.size()) {
-                            if(columns.get(x).equals(dataList.get(i))) {
-                                x++;
-                            }
-                            else {
-                                data.add(i, null);
-                            }                            
-                        }
-                        else {
-                            data.add(i, null);
-                        }
-                }
-                
-                JSONObject company = new JSONObject();
-                
-                
-                company.put("ticker", ticker);
-                company.put("name", name);
-                company.put("exchange", exchange);
-                company.put("data", data);
-            
-                addToJSON(company, ticker, tickerCode);
-            } catch (NoSuchElementException e) {
-                System.err.println("Error on ticker " + ticker);
+                File f = new File("tickers/" + tickerKey + ".json");
+                System.out.println("Downloading ticker: " + ticker);
+                String url = "http://www.quandl.com/api/v1/datasets/DMDRN/" + tickerKey + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+                URL website = new URL(url);
+                ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+                FileOutputStream fos = new FileOutputStream("tickers/" + tickerKey + ".json");
+                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);                
+                    
+            } catch(FileNotFoundException e) {
+                System.err.println("Error downloading ticker " + ticker);
             }
             
-            //JSONArray company = new JSONArray();
-            //company.add(ticker);
-            //company.add(name);
-            //company.add(data);
+            Thread.sleep(100);
             
-            //addToJSON(company, ticker);
+            if(first) {
+                createJSON(tickerKey);
+                first = false;
+            }
             
-        } catch(FileNotFoundException e) {
-                    System.err.println("^Can't access that ticker file");
-                }
+            addToJSON(company, tickerKey);
+            
+        }
+        
+        File tickerDir = new File("tickers");
+        if(tickerDir.exists()) {
+            delete(tickerDir);
+        }
         
     }
     
-    public void createJSON(String tickerCode) throws FileNotFoundException, IOException, ParseException {
+    public void createJSON(String tickerKey) throws FileNotFoundException, IOException, ParseException {
         
-        JSONObject json = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+        JSONParser jsonParser = new JSONParser();
+        
+        Object obj = jsonParser.parse(new FileReader("tickers/" + tickerKey + ".json"));            
+        JSONObject object = (JSONObject) obj;          
+        jsonObject.put("column_names", object.get("column_names"));
+        
+        FileWriter file = new FileWriter("alltickers.json");
+        file.write(jsonObject.toJSONString());
+        file.flush();
+        file.close();   
+        
+    }
+    
+    public void addToJSON(JSONObject company, String tickerKey) throws FileNotFoundException, IOException, ParseException {
+        
         JSONParser parser = new JSONParser();
         
-        try {
-            
-            Object obj = parser.parse(new FileReader("tickers/" + tickerCode + ".json"));
-            
-            JSONObject jsonObject = (JSONObject) obj;
+        Object obj1 = parser.parse(new FileReader("alltickers.json"));
+        JSONObject mainObject = (JSONObject) obj1;
+        Object obj2 = parser.parse(new FileReader("tickers/" + tickerKey + ".json"));
+        JSONObject jsonObject = (JSONObject) obj2;
+        
+        JSONArray mainColumns = (JSONArray) mainObject.get("column_names");
+        JSONArray columns = (JSONArray) jsonObject.get("column_names");
+        JSONArray data = (JSONArray) jsonObject.get("data");
+        
+        if(data.size() == 0) {
+            for(int i = 0; i < mainColumns.size(); i++) {
+                data.add(i, null);
+            }
+        }
+        
+        else {
+            Iterator<JSONArray> iterator = data.iterator();
+            data = iterator.next();        
 
-            dataList = (JSONArray) jsonObject.get("column_names");
-            
-            json.put("column_names", dataList);
-            
-        } catch(FileNotFoundException e) {
-                    System.out.println("^There was an exception! The url doesn't exist");
+            int x = 0;
+
+            for(int i = 0; i < mainColumns.size(); i++) {
+                if(x < columns.size()) {
+                    if(columns.get(x).equals(mainColumns.get(i))) {
+                        x++;
+                    }
+                    else {
+                        data.add(i, null);
+                    }                            
                 }
-        
-        try {
-            
-            FileWriter file = new FileWriter("alltickers.json");
-            file.write(json.toJSONString());
-            file.flush();
-            file.close();
-            
-        } catch(IOException e) {
-            e.printStackTrace();
+                else {
+                    data.add(i, null);
+                }
+            }
         }
         
+        company.put("data", data);
+        System.out.println(company);
+        mainObject.put(tickerKey, company);
         
+        FileWriter file = new FileWriter("alltickers.json");
+        file.write(mainObject.toJSONString());
+        file.flush();
+        file.close();
         
     }
     
-    public void addToJSON(JSONObject company, String ticker, String tickerCode) throws IOException, ParseException {
-        
-        JSONObject json = new JSONObject();
-        JSONParser parser = new JSONParser();
-        
-        try {
-            
-            Object obj = parser.parse(new FileReader("alltickers.json"));
-            
-            json = (JSONObject) obj;
-            
-            json.put(tickerCode, company);
-            
-        } catch(FileNotFoundException e) {
-                    System.out.println("^There was an exception! The url doesn't exist");
-                }
-        
-        try {
-            
-            FileWriter file = new FileWriter("alltickers.json");
-            file.write(json.toJSONString());
-            file.flush();
-            file.close();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        
-    }
-    
+    /**
+     * retrieved from: http://www.mkyong.com/java/how-to-delete-directory-in-java/
+     * @param file
+     * @throws IOException 
+     */
+    public static void delete(File file) throws IOException{
+ 
+    	if(file.isDirectory()){
+ 
+            //directory is empty, then delete it
+            if(file.list().length==0){
+
+               file.delete();
+
+            }
+            else {
+
+               //list all the directory contents
+               String files[] = file.list();
+
+               for (String temp : files) {
+                  //construct the file structure
+                  File fileDelete = new File(file, temp);
+
+                  //recursive delete
+                 delete(fileDelete);
+               }
+
+               //check the directory again, if empty then delete it
+               if(file.list().length==0){
+                 file.delete();
+               }
+            }
+ 
+    	}
+        else {
+            //if file, then delete it
+            file.delete();
+    	}
+    }    
 }
