@@ -35,8 +35,7 @@ public class QuandlQuery {
         obj.run();        
     }
     
-    public void run() throws FileNotFoundException, IOException, ParseException, InterruptedException {
-        
+    public void run() throws FileNotFoundException, IOException, ParseException, InterruptedException {  
         
         String csvFile = "stockinfo.csv";
 	BufferedReader br = null;
