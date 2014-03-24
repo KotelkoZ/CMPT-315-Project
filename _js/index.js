@@ -56,6 +56,7 @@ $(document).ready(function() {
     
     
     // Grab the quandl data
+   //http://www.quandl.com/api/v1/datasets/OFDP/DMDRN_" + tickerCode + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb
     $.getJSON('./QuandlQuery/alltickers.json', function(file) {
         companyObject = file;
         
@@ -74,7 +75,7 @@ $(document).ready(function() {
         }
         XSelect.value = "Hi-Lo Risk";
         YSelect.value = "Value Line Beta";
-        BSelect.value = "Current PE Ratio";
+        BSelect.value = "Market Capitalization";
         
         makeChart();
     });

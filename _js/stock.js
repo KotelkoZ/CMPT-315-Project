@@ -16,6 +16,10 @@ $(document).ready(function() {
         }
         makeChart();
     });
+    
+    $(function() {
+        $('#right_column').tooltip();
+    });
 });  
             
 function makeChart() {
@@ -61,19 +65,34 @@ function makeChart() {
               
     var height = $('#right_column').height();
     var width = $('#right_column').width();
-    //var height = 300;
+    
+    var colors = [];
+    switch (Object.keys(companies).length) {
+        case 1:
+            colors = ['blue'];
+            break;
+        case 2:
+            colors = ['red','blue'];
+            break;
+            
+        case 3:
+            colors = ['orange','red','blue'];
+            break;
+    }
     
     var timelineoptions = {
         displayZoomButtons: false,
         fill: 4,
         thickness: 2,
+        colors: colors
     }
     var tableoptions = {
         showRowNumber: false,
         height: (height - 5).toString(),
         width: width.toString(),
         sort: 'event',
-        alternatingRowStyle: false
+        alternatingRowStyle: false,
+        cssClassNames: { hoverTableRow: 'highlightClass', selectedTableRow: 'selectedRow', headerCell: 'headercell' }
     }
                     
     var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('stock_chart_div'));
@@ -115,16 +134,40 @@ function makeChart() {
             var rowInd = i + 2;
             
             $('tbody  tr:nth-child(' + rowInd + ')').removeClass('google-visualization-table-tr-even');
-            console.log(rowInd);
             
             if (date >= start && date <= end) {
-                $('tbody  tr:nth-child(' + rowInd + ')').addClass('selected');
-                //a.push({row: i, column: null});
+                switch (Object.keys(companies).length) {
+                    case 1:
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(2)').addClass('blue_column');
+                        break;
+                    case 2:
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(2)').addClass('red_column');
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(3)').addClass('blue_column');
+                        break;
+                    case 3: 
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(2)').addClass('orange_column');
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(3)').addClass('red_column');
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(4)').addClass('blue_column');
+                        break;
+                }
+                
             } else {
-                $('tbody  tr:nth-child(' + rowInd + ')').removeClass('selected');
+                switch (Object.keys(companies).length) {
+                    case 1:
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(2)').removeClass('blue_column');
+                        break;
+                    case 2:
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(2)').removeClass('red_column');
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(3)').removeClass('blue_column');
+                        break;
+                    case 3: 
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(2)').removeClass('orange_column');
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(3)').removeClass('red_column');
+                        $('tr:nth-child(' + rowInd + ') td:nth-child(4)').removeClass('blue_column');
+                        break;
+                }
             }
         }
-        //table.setSelection(a);
     }
     
     function emptyRow(row) {
@@ -157,7 +200,7 @@ function getData(path, callback) {
     if (path == "")
         return;
                 
-    var url = "../QuandlQuery/tickers/" + path + ".json";
+    var url = "http://www.quandl.com/api/v1/datasets/DMDRN/" + path.toUpperCase() + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
                 
     $.getJSON(url, function(company) {
         var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
