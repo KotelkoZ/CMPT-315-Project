@@ -110,7 +110,7 @@ public class QuandlQuery {
                 System.err.println("Error downloading ticker " + ticker);
             }
             
-            Thread.sleep(100);
+            Thread.sleep(500);
             
             if(first) {
                 createJSON(tickerKey);
@@ -146,53 +146,58 @@ public class QuandlQuery {
     
     public void addToJSON(JSONObject company, String tickerKey) throws FileNotFoundException, IOException, ParseException {
         
-        JSONParser parser = new JSONParser();
-        
-        Object obj1 = parser.parse(new FileReader("alltickers.json"));
-        JSONObject mainObject = (JSONObject) obj1;
-        Object obj2 = parser.parse(new FileReader("tickers/" + tickerKey + ".json"));
-        JSONObject jsonObject = (JSONObject) obj2;
-        
-        JSONArray mainColumns = (JSONArray) mainObject.get("column_names");
-        JSONArray columns = (JSONArray) jsonObject.get("column_names");
-        JSONArray data = (JSONArray) jsonObject.get("data");
-        
-        if(data.size() == 0) {
-            for(int i = 0; i < mainColumns.size(); i++) {
-                data.add(i, null);
-            }
-        }
-        
-        else {
-            Iterator<JSONArray> iterator = data.iterator();
-            data = iterator.next();        
+        try {
+            
+            JSONParser parser = new JSONParser();
 
-            int x = 0;
+            Object obj1 = parser.parse(new FileReader("alltickers.json"));
+            JSONObject mainObject = (JSONObject) obj1;
+            Object obj2 = parser.parse(new FileReader("tickers/" + tickerKey + ".json"));
+            JSONObject jsonObject = (JSONObject) obj2;
 
-            for(int i = 0; i < mainColumns.size(); i++) {
-                if(x < columns.size()) {
-                    if(columns.get(x).equals(mainColumns.get(i))) {
-                        x++;
-                    }
-                    else {
-                        data.add(i, null);
-                    }                            
-                }
-                else {
+            JSONArray mainColumns = (JSONArray) mainObject.get("column_names");
+            JSONArray columns = (JSONArray) jsonObject.get("column_names");
+            JSONArray data = (JSONArray) jsonObject.get("data");
+
+            if(data.size() == 0) {
+                for(int i = 0; i < mainColumns.size(); i++) {
                     data.add(i, null);
                 }
             }
+
+            else {
+                Iterator<JSONArray> iterator = data.iterator();
+                data = iterator.next();        
+
+                int x = 0;
+
+                for(int i = 0; i < mainColumns.size(); i++) {
+                    if(x < columns.size()) {
+                        if(columns.get(x).equals(mainColumns.get(i))) {
+                            x++;
+                        }
+                        else {
+                            data.add(i, null);
+                        }                            
+                    }
+                    else {
+                        data.add(i, null);
+                    }
+                }
+            }
+
+            company.put("data", data);
+            System.out.println(company);
+            mainObject.put(tickerKey, company);
+
+            FileWriter file = new FileWriter("alltickers.json");
+            file.write(mainObject.toJSONString());
+            file.flush();
+            file.close();
+            
+        } catch(FileNotFoundException e) {
+            System.err.println("Don't have ticker file");
         }
-        
-        company.put("data", data);
-        System.out.println(company);
-        mainObject.put(tickerKey, company);
-        
-        FileWriter file = new FileWriter("alltickers.json");
-        file.write(mainObject.toJSONString());
-        file.flush();
-        file.close();
-        
     }
     
     /**
