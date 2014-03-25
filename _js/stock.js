@@ -219,10 +219,15 @@ function getData(path, callback) {
         
     }).fail(function () {
             // no results for the query
+        if (Object.keys(companies).length === 0) {
+            console.log('ok');
+            document.getElementById('ticker_title').innerHTML = 'Cannot find ticker ' + path + '.';
+        } else {
             $('#error').text('Cannot find ticker ' + path + '.');
             setTimeout(function () {
                 $('#error').text('');
             }, 3000);
+        }
         
     });
 }
@@ -247,5 +252,5 @@ function addCompareTicker() {
 function search(term) {
     term = term || document.getElementById('searchBox').value;
     if (term)
-        window.location.href = "stock/" + term;
+        window.location.href = term;
 }
