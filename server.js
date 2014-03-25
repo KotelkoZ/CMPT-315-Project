@@ -19,7 +19,7 @@ var server = http.Server(function(req, res) {
         stream.pipe(res);
     }
             
-    else if (url.pathname == '/stock' || url.pathname == '/stock/') {
+    else if (url.pathname == '/stock' || url.pathname == '/stock/' ) {
         res.writeHead(200, {"Content-Type": "text/html"});
         var stream = fs.createReadStream(root + '/_html/stock_list.html');
         stream.pipe(res);
@@ -28,17 +28,10 @@ var server = http.Server(function(req, res) {
     else if (url.pathname.search('/stock/') == 0) {
         var ticker = url.pathname.slice(7);
         // check if the ticker file exists.
-        fs.stat(root + '/QuandlQuery/tickers/' + ticker + '.json', function(err) {
-            if (err) {
-                if (err.code == 'ENOENT') send404(res);
-                else                      send500(res);
-            } 
-            else {
-                res.writeHead(200, {"Content-Type": "text/html"});
-                var stream = fs.createReadStream(root + '/_html/stock.html');
-                stream.pipe(res);
-            }
-        });
+        
+        res.writeHead(200, {"Content-Type": "text/html"});
+        var stream = fs.createReadStream(root + '/_html/stock.html');
+        stream.pipe(res);
     }
             
     else {
