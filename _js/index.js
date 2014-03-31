@@ -31,9 +31,7 @@ $(document).ready(function() {
                 
     // Values for the range sliders.
     var values = {
-        "PERatioSlider":   [0,45],    "YearLowSlider":        [0,220],  
-        "YearHighSlider":  [0,280],  "YearLowChangeSlider": [0,60],   "YearHighChangeSlider": [-40,5],  "OpenSlider":          [10,250], 
-        "PrevCloseSlider": [10,250], "PercentChangeSlider": [-10,10], "BookValueSlider":      [0,80],   "DividendYieldSlider": [0,7]
+        "PERatioSlider":   [0,1000],    "MarketCapSlider":        [0,250000],
     };
                 
     // Go through each input.slider and set it to a range slider with the correct range from values array.
@@ -49,8 +47,8 @@ $(document).ready(function() {
             from: min,  to: max,
             scale: [min, '|', p1, '|', p2, '|', max],
             limits: false,
-            step: (max - min) / 20,
-            onstatechange: function() { makeChart(companyObject); }
+            step: (max - min) / 20
+            //onstatechange: function() { makeChart(companyObject); }
         });
     });
     
@@ -120,7 +118,14 @@ function satisfyFilters(c) {
             if (!(document.getElementById('AMEXFilter').checked))
                 return false;
             break;
+        case 'PINK':
+            if (!(document.getElementById('PINKFilter').checked))
+                return false;
+            break;
     }
+    
+    if (!within($("#PERatioSlider").attr('value'), companyObject[c]['data'][companyObject['column_names'].indexOf('Current PE Ratio')])) return false;
+    if (!within($("#MarketCapSlider").attr('value'), companyObject[c]['data'][companyObject['column_names'].indexOf('Market Capitalization')])) return false;
     
     return true;
                 
@@ -136,12 +141,12 @@ function satisfyFilters(c) {
     if (!within($("#BookValueSlider").attr('value'), c.BookValue)) return false;
     if (!within($("#DividendYieldSlider").attr('value'), c.DividendYield)) return false;*/
                 
-    return true;
+    //return true;
 }
             
 function makeChart() {
     if (companyObject === undefined) return;
-                
+                console.log(companyObject);
     var XIndex = document.getElementById('XSelect').selectedIndex;
     var YIndex = document.getElementById('YSelect').selectedIndex;
     var BIndex = document.getElementById('BSelect').selectedIndex;
@@ -156,7 +161,6 @@ function makeChart() {
         if (cName !== "column_names" && satisfyFilters(cName)) {
             var xVal = companyObject[cName]['data'][XIndex + 1];
             var yVal = companyObject[cName]['data'][YIndex + 1];
-            //var sizeIndex = companyObject['column_names'].indexOf(bubbleSize);
             var bVal = companyObject[cName]['data'][BIndex + 1];
             
             if (xVal !== null && yVal !== null && bVal !== 0 && bVal !== null) {
@@ -169,16 +173,7 @@ function makeChart() {
                     companyObject[cName]['name'],
                     bVal
                 ]);
-            } 
-            
-            /*
-            chartArray.push([
-                cName, 
-                companyObject[cName]['data'][XIndex + 1],
-                companyObject[cName]['data'][YIndex + 1],
-                companyObject[cName]['name'],
-                companyObject[cName]['data'][sizeIndex + 1]
-            ]);*/
+            }
         }
     }
     

@@ -127,8 +127,9 @@ function makeChart() {
         var end = Date.parse(range.end);
         var a = [];
         
-        for (var i = 0; i < data['xf'].length; i++) {
-            var date = Date.parse(data['xf'][i]['c'][0]['v']);
+        for (var i = 0; i < data.getNumberOfRows(); i++) {
+            var date = data.getValue(i, 0);
+            
             // have to add by two because child numbers start at 1. and since we dont want to select the head line,
             // the first data row is row 2.
             var rowInd = i + 2;

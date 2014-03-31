@@ -50,6 +50,7 @@
                             <input type="checkbox" id="NASDAQFilter" checked> NASDAQ<br>
                             <input type="checkbox" id="TSXFilter" checked> TSX<br>
                             <input type="checkbox" id="AMEXFilter" checked> AMEX<br>
+                            <input type="checkbox" id="PINKFilter" checked> PINK<br>
                         </p>
                 
                         <p>X-Axis<br><select id='XSelect' class='cboBox'></select></p>
@@ -62,35 +63,16 @@
                     
                     <div id="filter_table_ranges">
                         <p class="slider_label">P/E Ratio<br>
-                            <input id="PERatioSlider" class="slider" type="text" name="area" value="0;45" />
+                            <input id="PERatioSlider" class="slider" type="text" name="area" value="0;1000" />
                         <br></p>
-                        <p class="slider_label">Year Low<br>
-                            <input id="YearLowSlider" class="slider" type="text" name="area" value="0;220" />
+                        <p class="slider_label">Market Cap<br>
+                            <input id="MarketCapSlider" class="slider" type="text" name="area" value="0;250000" />
                         <br></p>
-                        <p class="slider_label">Year High<br>
-                            <input id="YearHighSlider" class="slider" type="text" name="area" value="0;280" />
-                        <br></p>
-                        <p class="slider_label">Change From Year Low<br>
-                            <input id="YearLowChangeSlider" class="slider" type="text" name="area" value="0;60" />
-                        <br></p>
-                        <p class="slider_label">Change From Year High<br>
-                            <input id="YearHighChangeSlider" class="slider" type="text" name="area" value="-40;5" />
-                        <br></p>
-                        <p class="slider_label">Open<br>
-                           <input id="OpenSlider" class="slider" type="text" name="area" value="10;250" />
-                        <br></p>
-                        <p class="slider_label">Previous Close<br>
-                            <input id="PrevCloseSlider" class="slider" type="text" name="area" value="10;250" />
-                        <br></p>
-                        <p class="slider_label">Percent Change<br>
-                            <input id="PercentChangeSlider" class="slider" type="text" name="area" value="-10;10" />
-                        <br></p>
-                        <p class="slider_label">Book Value<br>
-                            <input id="BookValueSlider" class="slider" type="text" name="area" value="0;80" />
-                        <br></p>
-                        <p class="slider_label">Dividend Yield<br>
-                            <input id="DividendYieldSlider" class="slider" type="text" name="area" value="0;7" />
-                        <br></p>
+                        
+                        
+                        
+                        
+                        
                     </div> <!-- // filter_table_ranges -->
                 </div> <!-- // table_row -->
                 </div> <!-- // filter_table -->
