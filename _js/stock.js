@@ -1,6 +1,7 @@
 
 var companies = {};
 var calledCompany;
+var allTickers;
             
 google.load('visualization', '1', {'packages':['annotatedtimeline']});
 google.load('visualization', '1', {packages:['table']});
@@ -8,21 +9,33 @@ google.load('visualization', '1', {packages:['table']});
             
 $(document).ready(function() {
     var i = document.URL.indexOf('/stock/');
-    getData(document.URL.slice(i + 7), function(column_names) {
-        // Put the column_names into the combo box.
-        var combo = document.getElementById('combo');
-        for (var i = 1; i < column_names.length; i++) {
-            combo.innerHTML += '<option>' + column_names[i] + '</option>';
-        }
-        makeChart();
-    });
+                
+    //$.getJSON('./QuandlQuery/alltickers.json', function(data) {
+    //    allTickers = data;
+    //    go();
+    //});
     
-    $(function() {
-        $('#right_column').tooltip();
-    });
+    //function go() {
+    
+        getData(document.URL.slice(i + 7), function(column_names) {
+            // Put the column_names into the combo box.
+            var combo = document.getElementById('combo');
+            for (var i = 1; i < column_names.length; i++) {
+                combo.innerHTML += '<option>' + column_names[i] + '</option>';
+            }
+            makeChart();
+        });
+        
+        $(function() {
+            $('#right_column').tooltip();
+        });
+        
+    //}
+    
 });  
             
 function makeChart() {
+    //console.log(allTickers[2]);
     var data = new google.visualization.DataTable();
                     
     // Add a date column to the chart, then a column for each company in companies map.
@@ -205,6 +218,7 @@ function getData(path, callback) {
                 
     $.getJSON(url, function(company) {
         var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
+        name = name + '++';
         var column_names = company.column_names;
         var data = company.data;
         companies[name] = {"column_names":column_names, "data":data};
