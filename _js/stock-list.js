@@ -45,10 +45,8 @@ function makeTable() {
     
     google.visualization.events.addListener(table, 'select',
         function(event) {
-            var index = table.getSelection()[0].row;
-            var ticker = data.Bd[index][1].Ue.replace('.', '_');
+            var ticker = data.getValue(table.getSelection()[0].row, 1);
             window.location.href = "stock/" + ticker;
-            //console.log(ticker);
     });
     
 }
