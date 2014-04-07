@@ -1,7 +1,9 @@
 
 var companies = {};
-var calledCompany;
+var companiesDaily = {};
 var allTickers;
+//var companyData;
+var calledCompany;
 var priceCode;
 var p;
             
@@ -21,6 +23,7 @@ $(document).ready(function() {
 function go() {
     
     var i = document.URL.indexOf('/stock/');
+    /*
     var x = document.URL.slice(i + 7);
     x = x.toUpperCase();
     priceCode = allTickers[x]['price code'];
@@ -28,14 +31,19 @@ function go() {
     
     var url = "http://www.quandl.com/api/v1/datasets/" + priceCode + ".json?auth_token=iT1LrBo1Uw79uqJfrKyb";
     $.getJSON(url, function(company) {
-        var temp = company["data"][0];
+        companyData = company['data'];
+        var temp = companyData[0];
         temp = temp.length;
         p = company["data"][0][temp-2];
-    
+    */
         //console.log(p);
         getData(document.URL.slice(i + 7), function(column_names) {
+            //console.log(calledCompany);
             // Put the column_names into the combo box.
             var combo = document.getElementById('combo');
+            // Add entries of open
+            combo.innerHTML += '<option>Open</option><option>High</option><option>Low</option><option>Close</option>';
+            // Add entries for all returned quandl fields.
             for (var i = 1; i < column_names.length; i++) {
                 combo.innerHTML += '<option>' + column_names[i] + '</option>';
             }
@@ -46,25 +54,112 @@ function go() {
             $('#right_column').tooltip();
         });
         
-    });
+    //});
     
 }     
 
 function makeChart() {
-    
+    console.log(companiesDaily);
     var data = new google.visualization.DataTable();
-                    
+    var rows = [];
+    
     // Add a date column to the chart, then a column for each company in companies map.
     data.addColumn('date', 'Date');
     for (var i = Object.keys(companies).length - 1; i >= 0; i--) {
         data.addColumn('number', Object.keys(companies)[i]);
     }
+    
+    var val = document.getElementById('combo').value;
+    
+    if (val === 'Open' || val === 'High' || val === 'Low' || val === 'Close') {
+        var index;
+        switch (val) {
+            case 'Open':
+                index = 1;
+                break;
+            case 'High':
+                index = 2;
+                break;
+            case 'Low':
+                index = 3;
+                break;
+            case 'Close':
+                index = 4;
+                break;
+        }
+        
+        for (var i = 0; true; i++) {
+            var mainComp = companiesDaily[calledCompany];
+            var day = mainComp.data[i];
+            var date = new Date(day[0]);
+            
+            var today = new Date();
+            var lastyear = new Date(today.getFullYear() - 2, today.getMonth(), today.getDate());
+            
+            if (date < lastyear) {
+                break;
+            }
+            
+            var rowEntry = [new Date(day[0])];
+            
+            for (var j = Object.keys(companies).length - 1; j >= 0; j--) {
+                rowEntry.push(companiesDaily[Object.keys(companiesDaily)[j]]['data'][i][index]);
+            } 
+            
+            rows.push(rowEntry);
+        }
+        /*
+        for (var i = 0; i < 1000; i++) {
+            var day = companyData[i];
+            var date = new Date(day[0]);
+            
+            var today = new Date();
+            var lastyear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+            
+            if (date < lastyear) {
+                break;
+            }
+            
+            //console.log(date + ' - ' + lastyear);
+            
+            rows.push([new Date(day[0]), day[4]]);
+        }*/
+        
+        /*
+        companyData.forEach(function(day) {
+            var date = new Date(day[0]);
+            var today = new Date();
+            var lastyear = new Date(today.getDay(), today.getMonth(), today.getYear() - 1);
+            console.log(lastyear);
+            
+            if (date < new Date(today.getDay(), today.getMonth(), today.getYear() - 1)) {
+                
+            }
+            
+            
+            var close = day[4];
+            rows.push([new Date(date), close]);
+        });*/
+        
+        //console.log(rows);
+        
+        
+        
+        
+        
+    } else {
+     /*               
+    // Add a date column to the chart, then a column for each company in companies map.
+    data.addColumn('date', 'Date');
+    for (var i = Object.keys(companies).length - 1; i >= 0; i--) {
+        data.addColumn('number', Object.keys(companies)[i]);
+    }*/
                     
     // find the company with the oldest data
     var oldestDate = maxCompany(companies);
     var oldestYear = new Date(oldestDate).getFullYear();
                     
-    var rows = [];
+    //var rows = [];
                 
     var mainTicker = document.getElementById('ticker_title').value;
     for (var i = 2014; i >= oldestYear; i--) {
@@ -90,12 +185,17 @@ function makeChart() {
             rows.push(rowEntry);
         }
     }
+        
+    //data.addRows(rows);
+        
+    }
+    
     data.addRows(rows);
               
     var height = $('#right_column').height();
     var width = $('#right_column').width();
     
-    var colors = [];
+    var colors = ['blue'];
     switch (Object.keys(companies).length) {
         case 1:
             colors = ['blue'];
@@ -232,19 +332,17 @@ function getData(path, callback) {
     var url = "http://www.quandl.com/api/v1/datasets/DMDRN/" + path.toUpperCase() + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";          
     $.getJSON(url, function(company) {
         var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
-        name = name + ' - ' + p;
+        //name = name + ' - ';
         var column_names = company.column_names;
         var data = company.data;
         companies[name] = {"column_names":column_names, "data":data};
                         
-        if (Object.keys(companies).length == 1) {
-            // Set the title to the name of the company that the page was called with.
-            calledCompany = name;
-            document.getElementById('ticker_title').innerHTML = name;
-        }
+        
+        
+        getPriceData(callback, company);
                         
         // make the callback.
-        callback(company.column_names);
+        //callback(company.column_names);
         
     }).fail(function () {
             // no results for the query
@@ -259,6 +357,38 @@ function getData(path, callback) {
         }
         
     });
+    
+    function getPriceData (callback, company) {
+        
+        var priceCode = allTickers[path.toUpperCase()]['price code'];
+        priceCode = priceCode.toUpperCase();
+        
+        url = "http://www.quandl.com/api/v1/datasets/" + priceCode + ".json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+        $.getJSON(url, function(data) {
+            var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
+            companiesDaily[name] = data;
+            
+            if (Object.keys(companiesDaily).length == 1) {
+                // Set the title to the name of the company that the page was called with.
+                calledCompany = name;
+                
+                var todayClose = data['data'][0][4];
+                var yesterdayClose = data['data'][1][4];
+                
+                document.getElementById('ticker_title').innerHTML = name + ' - ' + data['data'][0][1];
+                var perc = ((todayClose / yesterdayClose) - 1).toFixed(5);
+                
+                if(todayClose > yesterdayClose) {
+                    document.getElementById('up').innerHTML = '&nbsp;(+' + perc.toString() + '%)';
+                } else {
+                    document.getElementById('down').innerHTML = '&nbsp;(' + perc.toString() + '%)';
+                }
+            }
+            
+            
+            callback(company.column_names);
+        });
+    }
 }
             
 function addCompareTicker() {

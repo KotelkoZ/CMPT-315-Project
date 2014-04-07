@@ -153,14 +153,14 @@ div#stock_chart_div {
 div#left_column {
     display: inline-block;
     width: calc(100% - 463px);
-    height: calc(100% - 65px);
+    height: calc(100% - 105px);
 }
 
 div#right_column {
     display: inline-block;
     vertical-align: top;
     width: 448px;
-    height: calc(100% - 68px);
+    height: calc(100% - 108px);
     margin-left: 10px;
     margin-top: 9px;
     border: 1px solid black;
@@ -197,6 +197,18 @@ td.orange_column {
     font-size:10pt;
     font-family:Calibri;
     float: right;
+}
+
+h2.title {
+    display: inline-block;
+}
+
+h2#up {
+    color: green;
+}
+
+h2#down {
+    color: red;
 }
 
 
