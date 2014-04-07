@@ -2,43 +2,19 @@
 var companies = {};
 var companiesDaily = {};
 var allTickers;
-//var companyData;
 var calledCompany;
 var priceCode;
 var p;
             
 google.load('visualization', '1', {'packages':['annotatedtimeline']});
 google.load('visualization', '1', {packages:['table']});
-//google.setOnLoadCallback();
             
 $(document).ready(function() {    
                 
     $.getJSON('../QuandlQuery/alltickers.json', function(data) {
         allTickers = data;
-        go();
-    });    
-    
-}); 
-
-function go() {
-    
-    var i = document.URL.indexOf('/stock/');
-    /*
-    var x = document.URL.slice(i + 7);
-    x = x.toUpperCase();
-    priceCode = allTickers[x]['price code'];
-    priceCode = priceCode.toUpperCase();
-    
-    var url = "http://www.quandl.com/api/v1/datasets/" + priceCode + ".json?auth_token=iT1LrBo1Uw79uqJfrKyb";
-    $.getJSON(url, function(company) {
-        companyData = company['data'];
-        var temp = companyData[0];
-        temp = temp.length;
-        p = company["data"][0][temp-2];
-    */
-        //console.log(p);
+        var i = document.URL.indexOf('/stock/');
         getData(document.URL.slice(i + 7), function(column_names) {
-            //console.log(calledCompany);
             // Put the column_names into the combo box.
             var combo = document.getElementById('combo');
             // Add entries of open
@@ -53,10 +29,12 @@ function go() {
         $(function() {
             $('#right_column').tooltip();
         });
-        
-    //});
+    });    
     
-}     
+}); 
+
+    
+     
 
 function makeChart() {
     console.log(companiesDaily);
@@ -103,58 +81,17 @@ function makeChart() {
             var rowEntry = [new Date(day[0])];
             
             for (var j = Object.keys(companies).length - 1; j >= 0; j--) {
-                rowEntry.push(companiesDaily[Object.keys(companiesDaily)[j]]['data'][i][index]);
+                var company = companiesDaily[Object.keys(companiesDaily)[j]];
+                if (company) {
+                    rowEntry.push(company['data'][i][index]);
+                } else {
+                    rowEntry.push(null);
+                }
             } 
-            
+            console.log(rowEntry);
             rows.push(rowEntry);
         }
-        /*
-        for (var i = 0; i < 1000; i++) {
-            var day = companyData[i];
-            var date = new Date(day[0]);
-            
-            var today = new Date();
-            var lastyear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-            
-            if (date < lastyear) {
-                break;
-            }
-            
-            //console.log(date + ' - ' + lastyear);
-            
-            rows.push([new Date(day[0]), day[4]]);
-        }*/
-        
-        /*
-        companyData.forEach(function(day) {
-            var date = new Date(day[0]);
-            var today = new Date();
-            var lastyear = new Date(today.getDay(), today.getMonth(), today.getYear() - 1);
-            console.log(lastyear);
-            
-            if (date < new Date(today.getDay(), today.getMonth(), today.getYear() - 1)) {
-                
-            }
-            
-            
-            var close = day[4];
-            rows.push([new Date(date), close]);
-        });*/
-        
-        //console.log(rows);
-        
-        
-        
-        
-        
-    } else {
-     /*               
-    // Add a date column to the chart, then a column for each company in companies map.
-    data.addColumn('date', 'Date');
-    for (var i = Object.keys(companies).length - 1; i >= 0; i--) {
-        data.addColumn('number', Object.keys(companies)[i]);
-    }*/
-                    
+    } else {         
     // find the company with the oldest data
     var oldestDate = maxCompany(companies);
     var oldestYear = new Date(oldestDate).getFullYear();
@@ -235,12 +172,12 @@ function makeChart() {
     
     google.visualization.events.addListener(table, 'sort', function (evt) {
         // Delete the ticker from the comparison when the company is clicked in the table
-        var column = evt.column;
-        var company = data['yf'][column]['label'];
+        var company = data.getColumnLabel(evt.column);
         
         if (company === 'Date') {
         } else if (company !== calledCompany) {
             delete companies[company];
+            delete companiesDaily[company];
             makeChart();
         } else {
             $('#error').text('Cannot remove ' + calledCompany + ' from comparison.');
@@ -337,13 +274,8 @@ function getData(path, callback) {
         var data = company.data;
         companies[name] = {"column_names":column_names, "data":data};
                         
-        
-        
         getPriceData(callback, company);
-                        
-        // make the callback.
-        //callback(company.column_names);
-        
+                       
     }).fail(function () {
             // no results for the query
         if (Object.keys(companies).length === 0) {
@@ -359,13 +291,19 @@ function getData(path, callback) {
     });
     
     function getPriceData (callback, company) {
+        var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
+        
+        if (!allTickers[path.toUpperCase()]) {
+            companiesDaily[name] = undefined;
+            return callback(company.column_names);
+        }
         
         var priceCode = allTickers[path.toUpperCase()]['price code'];
         priceCode = priceCode.toUpperCase();
         
         url = "http://www.quandl.com/api/v1/datasets/" + priceCode + ".json?auth_token=iT1LrBo1Uw79uqJfrKyb";
         $.getJSON(url, function(data) {
-            var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
+            //var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
             companiesDaily[name] = data;
             
             if (Object.keys(companiesDaily).length == 1) {
@@ -375,16 +313,15 @@ function getData(path, callback) {
                 var todayClose = data['data'][0][4];
                 var yesterdayClose = data['data'][1][4];
                 
-                document.getElementById('ticker_title').innerHTML = name + ' - ' + data['data'][0][1];
+                document.getElementById('ticker_title').innerHTML = name + '&nbsp;&nbsp;$' + data['data'][0][1] + '&nbsp;&nbsp;';
                 var perc = ((todayClose / yesterdayClose) - 1).toFixed(5);
                 
                 if(todayClose > yesterdayClose) {
-                    document.getElementById('up').innerHTML = '&nbsp;(+' + perc.toString() + '%)';
+                    document.getElementById('up').innerHTML = '(+' + perc.toString() + '%)';
                 } else {
-                    document.getElementById('down').innerHTML = '&nbsp;(' + perc.toString() + '%)';
+                    document.getElementById('down').innerHTML = '(' + perc.toString() + '%)';
                 }
             }
-            
             
             callback(company.column_names);
         });
