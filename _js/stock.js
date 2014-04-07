@@ -2,21 +2,37 @@
 var companies = {};
 var calledCompany;
 var allTickers;
+var priceCode;
+var p;
             
 google.load('visualization', '1', {'packages':['annotatedtimeline']});
 google.load('visualization', '1', {packages:['table']});
 //google.setOnLoadCallback();
             
-$(document).ready(function() {
-    var i = document.URL.indexOf('/stock/');
+$(document).ready(function() {    
                 
-    //$.getJSON('./QuandlQuery/alltickers.json', function(data) {
-    //    allTickers = data;
-    //    go();
-    //});
+    $.getJSON('../QuandlQuery/alltickers.json', function(data) {
+        allTickers = data;
+        go();
+    });    
     
-    //function go() {
+}); 
+
+function go() {
     
+    var i = document.URL.indexOf('/stock/');
+    var x = document.URL.slice(i + 7);
+    x = x.toUpperCase();
+    priceCode = allTickers[x]['price code'];
+    priceCode = priceCode.toUpperCase();
+    
+    var url = "http://www.quandl.com/api/v1/datasets/" + priceCode + ".json?auth_token=iT1LrBo1Uw79uqJfrKyb";
+    $.getJSON(url, function(company) {
+        var temp = company["data"][0];
+        temp = temp.length;
+        p = company["data"][0][temp-2];
+    
+        //console.log(p);
         getData(document.URL.slice(i + 7), function(column_names) {
             // Put the column_names into the combo box.
             var combo = document.getElementById('combo');
@@ -25,17 +41,17 @@ $(document).ready(function() {
             }
             makeChart();
         });
-        
+
         $(function() {
             $('#right_column').tooltip();
         });
         
-    //}
+    });
     
-});  
-            
+}     
+
 function makeChart() {
-    //console.log(allTickers[2]);
+    
     var data = new google.visualization.DataTable();
                     
     // Add a date column to the chart, then a column for each company in companies map.
@@ -213,12 +229,10 @@ function getData(path, callback) {
     // get the JSON file from quandl.
     if (path == "")
         return;
-                
-    var url = "http://www.quandl.com/api/v1/datasets/DMDRN/" + path.toUpperCase() + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";
-                
+    var url = "http://www.quandl.com/api/v1/datasets/DMDRN/" + path.toUpperCase() + "_ALLFINANCIALRATIOS.json?auth_token=iT1LrBo1Uw79uqJfrKyb";          
     $.getJSON(url, function(company) {
         var name = company["name"].split(" - ")[0].replace('( ','(').replace(' )',')');
-        name = name + '++';
+        name = name + ' - ' + p;
         var column_names = company.column_names;
         var data = company.data;
         companies[name] = {"column_names":column_names, "data":data};

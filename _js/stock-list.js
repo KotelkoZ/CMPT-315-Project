@@ -3,8 +3,7 @@ google.load('visualization', '1', {packages:['table']});
 
 $(document).ready(function() {
     
-    var url = "./QuandlQuery/alltickers.json";
-    var a = 0;
+    var url = "../QuandlQuery/alltickers.json";
     $.getJSON(url, function(file) {
         companyObject = file;   
         makeTable();
@@ -16,7 +15,6 @@ $(document).ready(function() {
 var companyObject;
 
 function makeTable() {
-    var url = "../QuandlQuery/alltickers.json";
     var data = new google.visualization.DataTable();    
     
     var priceIndex = companyObject.column_names.indexOf('Stock Price');
